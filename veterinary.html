@@ -1,150 +1,186 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-contact="">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Flopexa Veterinary AI — Flopexa</title>
-<meta name="description" content="Advanced AI for animal health, genomics and precision veterinary care.">
+<link rel="icon" href="data:,">
+<title>Veterinary AI — Flopexa</title>
+<meta name="description" content="Whole-genome tests for horses and camels, mapped to the species' own genome, with hereditary and performance findings written for the treating vet.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap">
 <link rel="stylesheet" href="assets/flopexa.css">
 </head>
-<body>
+<body class="has-subnav">
+<a class="skip" href="#main">Skip to content</a>
 <header class="nav">
   <div class="nav-in">
-    <a class="nav-brand" href="index.html">Flopexa Genomics OS</a>
-    <nav class="nav-links" aria-label="Intelligences"><a href="research.html">Research</a><a href="therapeutics.html">Therapeutics</a><a href="stem-cell.html">Stem Cell</a><a href="veterinary.html" aria-current="page">Veterinary</a><a href="clinical.html">Clinical</a><a href="cloud.html">Cloud</a></nav>
+    <a class="nav-brand" href="index.html">Flopexa<span class="nav-brand-x"> Genomics OS</span></a>
+    <nav class="nav-links" id="site-nav" aria-label="Main">
+      <span class="nav-h">AI modules</span>
+      <a href="research.html">Research</a>
+      <a href="therapeutics.html">Therapeutics</a>
+      <a href="stem-cell.html">Stem Cell</a>
+      <a href="veterinary.html" aria-current="page">Veterinary</a>
+      <a href="clinical.html">Clinical</a>
+      <span class="nav-h">Platform</span>
+      <a class="sep" href="cloud.html">Cloud</a>
+      <a class="nav-more" href="index.html#substrate">How data is shared</a>
+      <span class="nav-h nav-more">Run an analysis</span>
+      <a class="nav-more" href="human-wgs.html">Human WGS pipeline</a>
+      <a class="nav-more" href="human-wgs.html#interpret">Interpret a VCF</a>
+      <a class="nav-more" href="index.html?sp=horse#genomics">Horse tests</a>
+      <a class="nav-more" href="index.html?sp=camel#genomics">Camel tests</a>
+      <a class="nav-more" href="#" data-contact data-subject="Flopexa" hidden>Contact</a>
+    </nav>
+    <a class="btn btn-nav" href="human-wgs.html">Run Human WGS</a>
+    <button class="nav-menu" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
   </div>
 </header>
 <div class="subnav" style="--tint:#FF9E8A">
   <div class="subnav-in">
     <span class="subnav-title">Veterinary AI</span>
-    <nav aria-label="On this page"><a href="#capabilities">Capabilities</a><a href="#how">How it works</a><a href="#scale">Scale</a></nav>
+    <nav aria-label="On this page">
+      <a href="#capabilities">What it does</a>
+      <a href="#how">How it works</a>
+      <a href="#tests">Tests by species</a>
+      <a href="#scope">Scope</a>
+      <a href="#fits">Where it fits</a>
+      <a href="#start">Get started</a>
+    </nav>
   </div>
 </div>
-<main style="--tint:#FF9E8A">
-<section class="hero">
-  <div class="hero-copy">
-    <p class="eyebrow" style="color:#FF9E8A">Organism</p>
-    <h1>Flopexa Veterinary AI</h1>
-    <p class="lead">Advanced AI for animal health, genomics and precision veterinary care.</p>
-  </div>
-  <div class="hero-field">
-    <canvas data-field data-shape="horse" data-color="#FF9E8A"></canvas>
-  </div>
-  <div class="cue"><i></i>Scroll</div>
-</section>
-
-<section class="stage">
-  <div class="stage-in">
-    <div class="stage-sticky">
-      <canvas data-field data-shape="horse" data-color="#FF9E8A"
-              data-zoom=".80" data-cx=".73"></canvas>
+<main id="main" style="--tint:#FF9E8A;--tint-ink:#B03A24">
+  <section class="hero hero--sub">
+    <div class="hero-copy">
+      <p class="eyebrow" style="color:var(--tint)">For equine and camel vets, studs and breeders</p>
+      <h1>Veterinary AI</h1>
+      <p class="lead">Whole-genome tests for horses and camels, mapped to the species' own genome, with hereditary and performance findings written for the treating vet.</p>
+      <div class="cta"><a class="btn" href="index.html?sp=horse#genomics">See the horse and camel tests</a><a class="link" href="#capabilities">What it does</a></div>
     </div>
+    <div class="hero-field"><canvas data-field data-shape="horse" data-color="#FF9E8A" aria-hidden="true"></canvas></div>
+    <a class="cue" href="#capabilities"><i></i>What it does</a>
+    <button type="button" class="motion" aria-pressed="false">Pause motion</button>
+  </section>
+
+  <section class="stage"><div class="stage-in">
+    <div class="stage-sticky"><canvas data-field data-shape="horse" data-color="#FF9E8A" data-zoom=".80" data-cx=".73" aria-hidden="true"></canvas></div>
     <div class="panels">
-      <div class="panel" id="capabilities" data-zoom=".80" data-cx=".73"
-           data-shape="horse" data-color="#FF9E8A">
-        <h2>What it does.</h2>
-        <ul class="big"><li><i style="background:#FF9E8A"></i>Population genomics</li><li><i style="background:#FF9E8A"></i>Hereditary screening</li><li><i style="background:#FF9E8A"></i>Performance &amp; welfare</li></ul>
-        <div class="chips" style="margin-top:24px"><span class="chip">Cross-species mapping</span><span class="chip">Breeding support</span><span class="chip">Herd-level analysis</span><span class="chip">Clinical genomics</span></div>
+      <div class="panel" id="capabilities" data-shape="horse" data-color="#FF9E8A" data-zoom=".80" data-cx=".73">
+        <p class="eyebrow">Veterinary AI</p>
+        <h2>What it does</h2>
+        <ul class="big">
+          <li><i style="background:#FF9E8A"></i><div><h3>Hereditary screening</h3><p>Screens a horse or camel genome for the known variants of consequence for the breed, from one sample.</p></div></li>
+          <li><i style="background:#FF9E8A"></i><div><h3>Stud and bloodline analysis</h3><p>Confirms parentage and maps relatedness across a stud or a bloodline.</p></div></li>
+          <li><i style="background:#FF9E8A"></i><div><h3>Performance and welfare</h3><p>Assesses trait-associated variants from genomic evidence, each reported with the evidence behind it.</p></div></li>
+        </ul>
+        <p class="also"><strong>Also:</strong> cross-species mapping, breeding support.</p>
       </div>
-      <div class="panel" id="how" data-shape="helix" data-color="#FF9E8A"
-           data-zoom=".92" data-cx=".73">
-        <h2>Four steps,<br>one pass.</h2>
-        <div class="steps"><div class="step"><div><h3>Sequence</h3><p>One sample, any species.</p></div></div><div class="step"><div><h3>Map</h3><p>The correct genome, not a proxy.</p></div></div><div class="step"><div><h3>Screen</h3><p>Variants that matter for that species.</p></div></div><div class="step"><div><h3>Report</h3><p>Written for the treating clinician.</p></div></div></div>
-      </div>
-      <div class="panel" data-shape="pulse" data-color="#FF9E8A"
-           data-zoom="1.06" data-cx=".71">
-        <p class="state" style="margin:0">The same biology, a different organism.</p>
-        
+      <div class="panel" id="how" data-shape="helix" data-color="#FF9E8A" data-zoom=".92" data-cx=".73">
+        <p class="eyebrow">Veterinary AI</p>
+        <h2>How it works</h2>
+        <p class="lead">Four steps, one run. Nothing is re-uploaded between them and nothing leaves the platform.</p>
+        <div class="steps">
+          <div class="step"><div><h3>Reads in</h3><p>Sequencing reads (FASTQ) for each animal, one sample per horse or camel.</p></div></div>
+          <div class="step"><div><h3>Map</h3><p>Reads are mapped to the species' own reference genome, not a human proxy.</p></div></div>
+          <div class="step"><div><h3>Screen</h3><p>Variants that matter for that species and breed are screened.</p></div></div>
+          <div class="step"><div><h3>Report</h3><p>Findings are written for the treating vet, with the evidence behind each one.</p></div></div>
+        </div>
+        <p class="io"><strong>You need:</strong> sequencing reads (FASTQ) for the animal. <strong>You get:</strong> a report for the treating vet with hereditary, parentage or performance findings and their sources.</p>
       </div>
     </div>
-  </div>
-</section>
+  </div></section>
 
-<section class="s s-white" id="scale">
-  <div class="wrap rise">
-    <h2>Data to patient.</h2>
-    <div class="ladder"><a class="rung"
-        href="research.html" style="--c:#7FD0EC">
-        <span class="rung-dot"></span>
-        <span class="rung-scale">Data</span>
-        <span class="rung-name">Research AI</span></a><a class="rung"
-        href="therapeutics.html" style="--c:#E8B25A">
-        <span class="rung-dot"></span>
-        <span class="rung-scale">Molecule</span>
-        <span class="rung-name">Therapeutics AI</span></a><a class="rung"
-        href="stem-cell.html" style="--c:#7EE0D0">
-        <span class="rung-dot"></span>
-        <span class="rung-scale">Cell</span>
-        <span class="rung-name">Stem Cell AI</span></a><a class="rung on"
-        href="veterinary.html" style="--c:#FF9E8A">
-        <span class="rung-dot"></span>
-        <span class="rung-scale">Organism</span>
-        <span class="rung-name">Veterinary AI</span></a><a class="rung"
-        href="clinical.html" style="--c:#C8A6FF">
-        <span class="rung-dot"></span>
-        <span class="rung-scale">Patient</span>
-        <span class="rung-name">Clinical AI</span></a></div>
-    <p class="ladder-note">This is the organism scale.</p>
-  </div>
-</section>
-<section class="s s-light" style="padding-top:0">
-  <div class="wrap"><div class="pager"><a href="stem-cell.html"><span class="k">Previous</span><span class="n">Stem Cell AI</span></a><a class="next" href="clinical.html"><span class="k">Next</span><span class="n">Clinical AI</span></a></div></div>
-</section>
+  <section class="s s-light" id="tests"><div class="wrap rise">
+    <p class="eyebrow">Tests by species</p>
+    <h2 class="h-sm">Horse and camel.</h2>
+    <p class="lead">Four tests for each species. None runs online yet; each is arranged with the Flopexa team.</p>
+    <div class="cards cards--2">
+      <article class="card card--light" style="--tint:#FF9E8A">
+        <h3>Horse</h3>
+        <ul class="tests-list">
+          <li><strong>Whole genome</strong> — the full genome, mapped to the horse reference genome, not a human one.</li>
+          <li><strong>Parentage</strong> — sire and dam confirmed from a single sample.</li>
+          <li><strong>Hereditary disease panel</strong> — known variants of consequence for the breed.</li>
+          <li><strong>Performance markers</strong> — trait-associated variants assessed from genomic evidence.</li>
+        </ul>
+        <div class="card-act"><a class="btn-ghost" href="index.html?sp=horse#genomics">See the horse tests</a></div>
+      </article>
+      <article class="card card--light" style="--tint:#E8B25A">
+        <h3>Camel</h3>
+        <ul class="tests-list">
+          <li><strong>Whole genome</strong> — the full genome, mapped to the camel reference genome.</li>
+          <li><strong>Parentage</strong> — lineage confirmed from a single sample.</li>
+          <li><strong>Hereditary disease panel</strong> — inherited risk screened from one sample.</li>
+          <li><strong>Racing markers</strong> — trait-associated variants assessed from genomic evidence.</li>
+        </ul>
+        <div class="card-act"><a class="btn-ghost" href="index.html?sp=camel#genomics">See the camel tests</a></div>
+      </article>
+    </div>
+  </div></section>
+
+  <section class="s s-light" id="scope"><div class="wrap rise">
+    <h2 class="h-sm">Scope</h2>
+    <div class="card card--light scope">
+      <p><strong>Built for:</strong> equine and camel vets, racing stables, stud farms and breeders.</p>
+      <p><strong>Not for:</strong> human samples; for those, see <a class="link" href="index.html?sp=human#genomics">the human tests</a>.</p>
+      <p class="fine">Product copy. Not a clinical or regulatory claim.</p>
+    </div>
+  </div></section>
+
+  <section class="s s-white" id="fits"><span id="scale"></span><div class="wrap rise">
+    <p class="eyebrow">Where it fits</p>
+    <h2 class="h-sm">Where Veterinary AI sits.</h2>
+    <p class="lead">Flopexa's five AI modules are arranged by the level of biology they work at, from raw data to the patient. All five read the same data layer, the Flopexa Cloud.</p>
+    <div class="ladder">
+      <a class="rung" href="research.html" style="--c:#7FD0EC;--c-ink:#0E6B88"><span class="rung-dot"></span><span class="rung-name">Research AI</span><span class="rung-desc">multi-omics discovery</span><span class="rung-scale">Data</span></a>
+      <a class="rung" href="therapeutics.html" style="--c:#E8B25A;--c-ink:#7A4E00"><span class="rung-dot"></span><span class="rung-name">Therapeutics AI</span><span class="rung-desc">drug discovery</span><span class="rung-scale">Molecule</span></a>
+      <a class="rung" href="stem-cell.html" style="--c:#7EE0D0;--c-ink:#0F6F63"><span class="rung-dot"></span><span class="rung-name">Stem Cell AI</span><span class="rung-desc">iPSC and regenerative</span><span class="rung-scale">Cell</span></a>
+      <a class="rung on" href="veterinary.html" style="--c:#FF9E8A;--c-ink:#B03A24" aria-current="page">
+        <span class="rung-dot"></span><span class="rung-name">Veterinary AI</span><span class="rung-desc">animal genomics</span><span class="rung-scale">Organism</span><span class="rung-here">You are here</span></a>
+      <a class="rung" href="clinical.html" style="--c:#C8A6FF;--c-ink:#5B3FB0"><span class="rung-dot"></span><span class="rung-name">Clinical AI</span><span class="rung-desc">decision support</span><span class="rung-scale">Patient</span></a>
+    </div>
+    <p class="ladder-note">You are here: Veterinary AI, at the organism level.</p>
+    <a class="link" href="cloud.html">Runs on Flopexa Cloud</a>
+  </div></section>
+
+  <section class="s s-light" id="start"><div class="wrap rise">
+    <p class="eyebrow">Get started</p>
+    <h2>The same biology, read for a horse or a camel.</h2>
+    <p class="lead">See the whole-genome, parentage, hereditary panel and marker tests for each species, or ask us about your stud.</p>
+    <div class="cta">
+      <a class="btn" href="index.html?sp=horse#genomics">See the horse and camel tests</a>
+      <a class="link" href="index.html?sp=camel#genomics">Camel tests</a>
+      <a class="link" href="#" data-contact data-subject="Veterinary AI" hidden>Talk to us</a>
+    </div>
+  </div></section>
 </main>
-<footer class="foot">
-  <div class="foot-in">
-    <div class="foot-cols"><div><h4>Intelligences</h4><ul><li><a href="research.html">Research</a></li><li><a href="therapeutics.html">Therapeutics</a></li><li><a href="stem-cell.html">Stem Cell</a></li><li><a href="veterinary.html">Veterinary</a></li><li><a href="clinical.html">Clinical</a></li><li><a href="cloud.html">Cloud</a></li></ul></div><div><h4>Genomics</h4><ul><li><a href="index.html#genomics">Human</a></li><li><a href="index.html#genomics">Horse</a></li><li><a href="index.html#genomics">Camel</a></li></ul></div><div><h4>Platform</h4><ul><li><a href="index.html">Overview</a></li><li><a href="index.html#substrate">Substrate</a></li><li><a href="cloud.html">The Cloud</a></li></ul></div></div>
-    <div class="foot-end">
-      <span>© 2026 Flopexa</span>
-      <span>One platform. Seven intelligences.</span>
-    </div>
-    <p class="fine" style="margin-top:12px">Product copy. Not a clinical or
-      regulatory claim.</p>
+<footer class="foot"><div class="foot-in">
+  <div class="foot-cols">
+    <div><h4>AI modules</h4><ul>
+      <li><a href="research.html">Research AI</a></li>
+      <li><a href="therapeutics.html">Therapeutics AI</a></li>
+      <li><a href="stem-cell.html">Stem Cell AI</a></li>
+      <li><a href="veterinary.html">Veterinary AI</a></li>
+      <li><a href="clinical.html">Clinical AI</a></li></ul></div>
+    <div><h4>Run an analysis</h4><ul>
+      <li><a href="human-wgs.html">Human WGS — run online</a></li>
+      <li><a href="human-wgs.html#interpret">Interpret a VCF</a></li>
+      <li><a href="index.html?sp=human#genomics">Human tests</a></li>
+      <li><a href="index.html?sp=horse#genomics">Horse tests</a></li>
+      <li><a href="index.html?sp=camel#genomics">Camel tests</a></li></ul></div>
+    <div><h4>Platform</h4><ul>
+      <li><a href="index.html">Overview</a></li>
+      <li><a href="index.html#platform">The five AI modules</a></li>
+      <li><a href="index.html#substrate">How data is shared</a></li>
+      <li><a href="cloud.html">Flopexa Cloud</a></li></ul></div>
+    <div data-contact-col hidden><h4>Company</h4><ul>
+      <li><a href="#" data-contact data-subject="Flopexa" hidden>Contact</a></li></ul></div>
   </div>
-</footer>
+  <div class="foot-end"><span>© 2026 Flopexa</span><span>One platform. Five AI modules. One data layer.</span></div>
+  <p class="fine">Product copy. Not a clinical or regulatory claim.</p>
+</div></footer>
 <script src="assets/field.js"></script>
-<script>
-(function(){
-  if(window.FlopexaField)FlopexaField.mountAll();
-
-  var io=new IntersectionObserver(function(es){
-    es.forEach(function(e){if(e.isIntersecting){e.target.classList.add("in");
-      io.unobserve(e.target);}});},{rootMargin:"0px 0px -12% 0px"});
-  document.querySelectorAll(".rise").forEach(function(n){io.observe(n);});
-
-  var sc=document.querySelector(".stage-sticky canvas");
-  if(sc&&window.FlopexaField){
-    var f=FlopexaField.get(sc);
-    var po=new IntersectionObserver(function(es){
-      es.forEach(function(e){
-        if(!e.isIntersecting||!f)return;
-        var d=e.target.dataset;
-        f.set(d.shape,d.color);
-        f.view(parseFloat(d.zoom)||1,parseFloat(d.cx));
-      });},{rootMargin:"-45% 0px -45% 0px"});
-    document.querySelectorAll(".panel[data-shape]").forEach(function(n){
-      po.observe(n);});
-  }
-
-  var sn=document.querySelector(".subnav");
-  if(sn){
-    var links=[].slice.call(sn.querySelectorAll("a"));
-    var secs=links.map(function(a){
-      return document.querySelector(a.getAttribute("href"));});
-    var spy=new IntersectionObserver(function(es){
-      es.forEach(function(e){
-        if(!e.isIntersecting)return;
-        var i=secs.indexOf(e.target);
-        if(i<0)return;
-        links.forEach(function(a,j){a.classList.toggle("on",j===i);});
-      });},{rootMargin:"-42% 0px -52% 0px"});
-    secs.forEach(function(s){if(s)spy.observe(s);});
-  }
-})();
-</script>
-
+<script src="assets/site.js"></script>
 </body>
 </html>

@@ -1,150 +1,155 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-contact="">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Flopexa Biological Intelligence Cloud — Flopexa</title>
-<meta name="description" content="Secure, compliant infrastructure for the whole of biology.">
+<link rel="icon" href="data:,">
+<title>Flopexa Cloud — the data layer under Flopexa's AI modules</title>
+<meta name="description" content="The infrastructure under the five AI modules: encrypted, in-region storage and one data schema, so every analysis runs on the same governed data.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap">
 <link rel="stylesheet" href="assets/flopexa.css">
 </head>
-<body>
+<body class="has-subnav">
+<a class="skip" href="#main">Skip to content</a>
 <header class="nav">
   <div class="nav-in">
-    <a class="nav-brand" href="index.html">Flopexa Genomics OS</a>
-    <nav class="nav-links" aria-label="Intelligences"><a href="research.html">Research</a><a href="therapeutics.html">Therapeutics</a><a href="stem-cell.html">Stem Cell</a><a href="veterinary.html">Veterinary</a><a href="clinical.html">Clinical</a><a href="cloud.html" aria-current="page">Cloud</a></nav>
+    <a class="nav-brand" href="index.html">Flopexa<span class="nav-brand-x"> Genomics OS</span></a>
+    <nav class="nav-links" id="site-nav" aria-label="Main">
+      <span class="nav-h">AI modules</span>
+      <a href="research.html">Research</a>
+      <a href="therapeutics.html">Therapeutics</a>
+      <a href="stem-cell.html">Stem Cell</a>
+      <a href="veterinary.html">Veterinary</a>
+      <a href="clinical.html">Clinical</a>
+      <span class="nav-h">Platform</span>
+      <a class="sep" href="cloud.html" aria-current="page">Cloud</a>
+      <a class="nav-more" href="index.html#substrate">How data is shared</a>
+      <span class="nav-h nav-more">Run an analysis</span>
+      <a class="nav-more" href="human-wgs.html">Human WGS pipeline</a>
+      <a class="nav-more" href="human-wgs.html#interpret">Interpret a VCF</a>
+      <a class="nav-more" href="index.html?sp=horse#genomics">Horse tests</a>
+      <a class="nav-more" href="index.html?sp=camel#genomics">Camel tests</a>
+      <a class="nav-more" href="#" data-contact data-subject="Flopexa" hidden>Contact</a>
+    </nav>
+    <a class="btn btn-nav" href="human-wgs.html">Run Human WGS</a>
+    <button class="nav-menu" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
   </div>
 </header>
 <div class="subnav" style="--tint:#A7DCF2">
   <div class="subnav-in">
-    <span class="subnav-title">The Cloud</span>
-    <nav aria-label="On this page"><a href="#capabilities">Capabilities</a><a href="#how">How it works</a><a href="#scale">Scale</a></nav>
+    <span class="subnav-title">Flopexa Cloud</span>
+    <nav aria-label="On this page">
+      <a href="#capabilities">What it does</a>
+      <a href="#how">How it works</a>
+      <a href="#scope">Scope</a>
+      <a href="#fits">Runs under all five</a>
+      <a href="#start">Get started</a>
+    </nav>
   </div>
 </div>
-<main style="--tint:#A7DCF2">
-<section class="hero">
-  <div class="hero-copy">
-    <p class="eyebrow" style="color:#A7DCF2">Substrate</p>
-    <h1>Flopexa Biological Intelligence Cloud</h1>
-    <p class="lead">Secure, compliant infrastructure for the whole of biology.</p>
-  </div>
-  <div class="hero-field">
-    <canvas data-field data-shape="lattice" data-color="#A7DCF2"></canvas>
-  </div>
-  <div class="cue"><i></i>Scroll</div>
-</section>
-
-<section class="stage">
-  <div class="stage-in">
-    <div class="stage-sticky">
-      <canvas data-field data-shape="lattice" data-color="#A7DCF2"
-              data-zoom=".80" data-cx=".73"></canvas>
+<main id="main" style="--tint:#A7DCF2;--tint-ink:#0F5F7F">
+  <section class="hero hero--sub">
+    <div class="hero-copy">
+      <p class="eyebrow" style="color:var(--tint)">The data layer under all five modules</p>
+      <h1>Flopexa Cloud</h1>
+      <p class="lead">The infrastructure under the five AI modules: encrypted, in-region storage and one data schema, so every analysis runs on the same governed data.</p>
+      <div class="cta"><a class="btn" href="index.html#platform">See the five AI modules</a><a class="link" href="human-wgs.html">Run Human WGS</a></div>
     </div>
+    <div class="hero-field"><canvas data-field data-shape="lattice" data-color="#A7DCF2" aria-hidden="true"></canvas></div>
+    <a class="cue" href="#capabilities"><i></i>What it does</a>
+    <button type="button" class="motion" aria-pressed="false">Pause motion</button>
+  </section>
+
+  <section class="stage"><div class="stage-in">
+    <div class="stage-sticky"><canvas data-field data-shape="lattice" data-color="#A7DCF2" data-zoom=".80" data-cx=".73" aria-hidden="true"></canvas></div>
     <div class="panels">
-      <div class="panel" id="capabilities" data-zoom=".80" data-cx=".73"
-           data-shape="lattice" data-color="#A7DCF2">
-        <h2>What it does.</h2>
-        <ul class="big"><li><i style="background:#A7DCF2"></i>Secure &amp; compliant</li><li><i style="background:#A7DCF2"></i>Integrated data</li><li><i style="background:#A7DCF2"></i>Model layer</li></ul>
-        <div class="chips" style="margin-top:24px"><span class="chip">Privacy &amp; compliance</span><span class="chip">Scalable &amp; interoperable</span><span class="chip">Globally connected</span><span class="chip">Unified access</span></div>
+      <div class="panel" id="capabilities" data-shape="lattice" data-color="#A7DCF2" data-zoom=".80" data-cx=".73">
+        <p class="eyebrow">Flopexa Cloud</p>
+        <h2>What it does</h2>
+        <ul class="big">
+          <li><i style="background:#A7DCF2"></i><div><h3>Secure and compliant</h3><p>Data lands encrypted and stays in region; access, audit and retention are set centrally.</p></div></li>
+          <li><i style="background:#A7DCF2"></i><div><h3>Integrated data</h3><p>Every assay is converted once into one schema, so all five modules read the same records.</p></div></li>
+          <li><i style="background:#A7DCF2"></i><div><h3>Model layer</h3><p>The analysis models behind all five modules run next to the data, inside the same governed environment.</p></div></li>
+        </ul>
+        <p class="also"><strong>Also:</strong> access control, audit trail, in-region storage, one schema.</p>
       </div>
-      <div class="panel" id="how" data-shape="helix" data-color="#A7DCF2"
-           data-zoom=".92" data-cx=".73">
-        <h2>Four steps,<br>one pass.</h2>
-        <div class="steps"><div class="step"><div><h3>Land</h3><p>Encrypted, in region.</p></div></div><div class="step"><div><h3>Normalise</h3><p>One schema, converted once.</p></div></div><div class="step"><div><h3>Govern</h3><p>Access, audit, retention — centrally.</p></div></div><div class="step"><div><h3>Serve</h3><p>No copies, no exports.</p></div></div></div>
-      </div>
-      <div class="panel" data-shape="pulse" data-color="#A7DCF2"
-           data-zoom="1.06" data-cx=".71">
-        <p class="state" style="margin:0">One substrate underneath all of it.</p>
-        
+      <div class="panel" id="how" data-shape="helix" data-color="#A7DCF2" data-zoom=".92" data-cx=".73">
+        <p class="eyebrow">Flopexa Cloud</p>
+        <h2>How it works</h2>
+        <p class="lead">Four steps, one run. Nothing is re-uploaded between them and nothing leaves the platform.</p>
+        <div class="steps">
+          <div class="step"><div><h3>Land</h3><p>Data lands encrypted, in region.</p></div></div>
+          <div class="step"><div><h3>Normalise</h3><p>Each file is converted once into one schema.</p></div></div>
+          <div class="step"><div><h3>Govern</h3><p>Access, audit and retention are set centrally, once.</p></div></div>
+          <div class="step"><div><h3>Serve</h3><p>Analyses run where the data lives, so working copies are not scattered across tools. Results come back to you.</p></div></div>
+        </div>
+        <p class="io"><strong>You need:</strong> nothing extra; every module and the Human WGS pipeline run on it. <strong>You get:</strong> one governed copy of your data and the results each module produces from it.</p>
       </div>
     </div>
-  </div>
-</section>
+  </div></section>
 
-<section class="s s-white" id="scale">
-  <div class="wrap rise">
-    <h2>Data to patient.</h2>
-    <div class="ladder"><a class="rung"
-        href="research.html" style="--c:#7FD0EC">
-        <span class="rung-dot"></span>
-        <span class="rung-scale">Data</span>
-        <span class="rung-name">Research AI</span></a><a class="rung"
-        href="therapeutics.html" style="--c:#E8B25A">
-        <span class="rung-dot"></span>
-        <span class="rung-scale">Molecule</span>
-        <span class="rung-name">Therapeutics AI</span></a><a class="rung"
-        href="stem-cell.html" style="--c:#7EE0D0">
-        <span class="rung-dot"></span>
-        <span class="rung-scale">Cell</span>
-        <span class="rung-name">Stem Cell AI</span></a><a class="rung"
-        href="veterinary.html" style="--c:#FF9E8A">
-        <span class="rung-dot"></span>
-        <span class="rung-scale">Organism</span>
-        <span class="rung-name">Veterinary AI</span></a><a class="rung"
-        href="clinical.html" style="--c:#C8A6FF">
-        <span class="rung-dot"></span>
-        <span class="rung-scale">Patient</span>
-        <span class="rung-name">Clinical AI</span></a></div>
-    <p class="ladder-note">Every scale runs on this one substrate.</p>
-  </div>
-</section>
-<section class="s s-light" style="padding-top:0">
-  <div class="wrap"><div class="pager"><a href="clinical.html"><span class="k">Previous</span><span class="n">Clinical AI</span></a><span></span></div></div>
-</section>
+  <section class="s s-light" id="scope"><div class="wrap rise">
+    <h2 class="h-sm">Scope</h2>
+    <div class="card card--light scope">
+      <p><strong>Built for:</strong> labs, clinics and biobanks that need one governed copy of their genomic data.</p>
+      <p><strong>Not for:</strong> a sixth module: every module reads it, none replaces it.</p>
+      <p class="fine">Product copy. Not a clinical or regulatory claim.</p>
+    </div>
+  </div></section>
+
+  <section class="s s-white" id="fits"><span id="scale"></span><div class="wrap rise">
+    <p class="eyebrow">Where it fits</p>
+    <h2 class="h-sm">Runs under all five.</h2>
+    <p class="lead">Flopexa Cloud is not a sixth module. It is the data layer every module reads, and nothing is exported between them.</p>
+    <ul class="under">
+      <li><a href="research.html"><i style="background:#7FD0EC"></i>Research AI<small>multi-omics discovery</small></a></li>
+      <li><a href="therapeutics.html"><i style="background:#E8B25A"></i>Therapeutics AI<small>drug discovery</small></a></li>
+      <li><a href="stem-cell.html"><i style="background:#7EE0D0"></i>Stem Cell AI<small>iPSC and regenerative</small></a></li>
+      <li><a href="veterinary.html"><i style="background:#FF9E8A"></i>Veterinary AI<small>animal genomics</small></a></li>
+      <li><a href="clinical.html"><i style="background:#C8A6FF"></i>Clinical AI<small>decision support</small></a></li>
+    </ul>
+    <p class="ladder-note">Flopexa Cloud runs underneath all five.</p>
+  </div></section>
+
+  <section class="s s-light" id="start"><div class="wrap rise">
+    <p class="eyebrow">Get started</p>
+    <h2>One data layer underneath all of it.</h2>
+    <p class="lead">Every module runs on the Flopexa Cloud. See the five modules, or start with a whole-genome sample.</p>
+    <div class="cta">
+      <a class="btn" href="index.html#platform">See the five AI modules</a>
+      <a class="link" href="human-wgs.html">Run Human WGS</a>
+      <a class="link" href="#" data-contact data-subject="Flopexa Cloud" hidden>Talk to us</a>
+    </div>
+  </div></section>
 </main>
-<footer class="foot">
-  <div class="foot-in">
-    <div class="foot-cols"><div><h4>Intelligences</h4><ul><li><a href="research.html">Research</a></li><li><a href="therapeutics.html">Therapeutics</a></li><li><a href="stem-cell.html">Stem Cell</a></li><li><a href="veterinary.html">Veterinary</a></li><li><a href="clinical.html">Clinical</a></li><li><a href="cloud.html">Cloud</a></li></ul></div><div><h4>Genomics</h4><ul><li><a href="index.html#genomics">Human</a></li><li><a href="index.html#genomics">Horse</a></li><li><a href="index.html#genomics">Camel</a></li></ul></div><div><h4>Platform</h4><ul><li><a href="index.html">Overview</a></li><li><a href="index.html#substrate">Substrate</a></li><li><a href="cloud.html">The Cloud</a></li></ul></div></div>
-    <div class="foot-end">
-      <span>© 2026 Flopexa</span>
-      <span>One platform. Seven intelligences.</span>
-    </div>
-    <p class="fine" style="margin-top:12px">Product copy. Not a clinical or
-      regulatory claim.</p>
+<footer class="foot"><div class="foot-in">
+  <div class="foot-cols">
+    <div><h4>AI modules</h4><ul>
+      <li><a href="research.html">Research AI</a></li>
+      <li><a href="therapeutics.html">Therapeutics AI</a></li>
+      <li><a href="stem-cell.html">Stem Cell AI</a></li>
+      <li><a href="veterinary.html">Veterinary AI</a></li>
+      <li><a href="clinical.html">Clinical AI</a></li></ul></div>
+    <div><h4>Run an analysis</h4><ul>
+      <li><a href="human-wgs.html">Human WGS — run online</a></li>
+      <li><a href="human-wgs.html#interpret">Interpret a VCF</a></li>
+      <li><a href="index.html?sp=human#genomics">Human tests</a></li>
+      <li><a href="index.html?sp=horse#genomics">Horse tests</a></li>
+      <li><a href="index.html?sp=camel#genomics">Camel tests</a></li></ul></div>
+    <div><h4>Platform</h4><ul>
+      <li><a href="index.html">Overview</a></li>
+      <li><a href="index.html#platform">The five AI modules</a></li>
+      <li><a href="index.html#substrate">How data is shared</a></li>
+      <li><a href="cloud.html">Flopexa Cloud</a></li></ul></div>
+    <div data-contact-col hidden><h4>Company</h4><ul>
+      <li><a href="#" data-contact data-subject="Flopexa" hidden>Contact</a></li></ul></div>
   </div>
-</footer>
+  <div class="foot-end"><span>© 2026 Flopexa</span><span>One platform. Five AI modules. One data layer.</span></div>
+  <p class="fine">Product copy. Not a clinical or regulatory claim.</p>
+</div></footer>
 <script src="assets/field.js"></script>
-<script>
-(function(){
-  if(window.FlopexaField)FlopexaField.mountAll();
-
-  var io=new IntersectionObserver(function(es){
-    es.forEach(function(e){if(e.isIntersecting){e.target.classList.add("in");
-      io.unobserve(e.target);}});},{rootMargin:"0px 0px -12% 0px"});
-  document.querySelectorAll(".rise").forEach(function(n){io.observe(n);});
-
-  var sc=document.querySelector(".stage-sticky canvas");
-  if(sc&&window.FlopexaField){
-    var f=FlopexaField.get(sc);
-    var po=new IntersectionObserver(function(es){
-      es.forEach(function(e){
-        if(!e.isIntersecting||!f)return;
-        var d=e.target.dataset;
-        f.set(d.shape,d.color);
-        f.view(parseFloat(d.zoom)||1,parseFloat(d.cx));
-      });},{rootMargin:"-45% 0px -45% 0px"});
-    document.querySelectorAll(".panel[data-shape]").forEach(function(n){
-      po.observe(n);});
-  }
-
-  var sn=document.querySelector(".subnav");
-  if(sn){
-    var links=[].slice.call(sn.querySelectorAll("a"));
-    var secs=links.map(function(a){
-      return document.querySelector(a.getAttribute("href"));});
-    var spy=new IntersectionObserver(function(es){
-      es.forEach(function(e){
-        if(!e.isIntersecting)return;
-        var i=secs.indexOf(e.target);
-        if(i<0)return;
-        links.forEach(function(a,j){a.classList.toggle("on",j===i);});
-      });},{rootMargin:"-42% 0px -52% 0px"});
-    secs.forEach(function(s){if(s)spy.observe(s);});
-  }
-})();
-</script>
-
+<script src="assets/site.js"></script>
 </body>
 </html>

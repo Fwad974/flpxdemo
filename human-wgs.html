@@ -1,269 +1,424 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-contact="">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Whole-genome sequencing — Human WGS — Flopexa</title>
-<meta name="description" content="Every base, coding and non-coding, in a single pass.">
+<link rel="icon" href="data:,">
+<title>Human WGS pipeline — Flopexa</title>
+<meta name="description" content="Upload FASTQ reads and take them through alignment, variant calling, annotation and interpretation. Stop at any stage and download what it produced, or interpret a VCF you already have.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap">
 <link rel="stylesheet" href="assets/flopexa.css">
 <!-- Where the WGS service lives. Leave blank to auto-detect it on this
      origin, or set it to e.g. http://localhost:8000/api/runs. -->
 <meta name="pipeline-endpoint" content="">
 </head>
-<body>
+<body class="has-subnav">
+<a class="skip" href="#main">Skip to content</a>
 <header class="nav">
   <div class="nav-in">
-    <a class="nav-brand" href="index.html">Flopexa Genomics OS</a>
-    <nav class="nav-links" aria-label="Intelligences"><a href="research.html">Research</a><a href="therapeutics.html">Therapeutics</a><a href="stem-cell.html">Stem Cell</a><a href="veterinary.html">Veterinary</a><a href="clinical.html">Clinical</a><a href="cloud.html">Cloud</a></nav>
+    <a class="nav-brand" href="index.html">Flopexa<span class="nav-brand-x"> Genomics OS</span></a>
+    <nav class="nav-links" id="site-nav" aria-label="Main">
+      <span class="nav-h">AI modules</span>
+      <a href="research.html">Research</a>
+      <a href="therapeutics.html">Therapeutics</a>
+      <a href="stem-cell.html">Stem Cell</a>
+      <a href="veterinary.html">Veterinary</a>
+      <a href="clinical.html">Clinical</a>
+      <span class="nav-h">Platform</span>
+      <a class="sep" href="cloud.html">Cloud</a>
+      <a class="nav-more" href="index.html#substrate">How data is shared</a>
+      <span class="nav-h nav-more">Run an analysis</span>
+      <a class="nav-more" href="human-wgs.html">Human WGS pipeline</a>
+      <a class="nav-more" href="human-wgs.html#interpret">Interpret a VCF</a>
+      <a class="nav-more" href="index.html?sp=horse#genomics">Horse tests</a>
+      <a class="nav-more" href="index.html?sp=camel#genomics">Camel tests</a>
+      <a class="nav-more" href="#" data-contact data-subject="Flopexa" hidden>Contact</a>
+    </nav>
+    <a class="btn btn-nav" href="human-wgs.html" aria-current="page">Run Human WGS</a>
+    <button class="nav-menu" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
   </div>
 </header>
-
-<main style="--tint:#C8A6FF">
-<section class="hero">
+<div class="subnav" style="--tint:#C8A6FF">
+  <div class="subnav-in">
+    <span class="subnav-title"><a href="index.html#genomics">Genomic tests</a> › Human · WGS</span>
+    <nav aria-label="On this page"><a href="#pipeline">Run from FASTQ</a><a href="#interpret">Interpret a VCF</a></nav>
+  </div>
+</div>
+<main id="main" style="--tint:#C8A6FF;--tint-ink:#5B3FB0">
+<section class="hero hero--tool"><div class="hero-in">
   <div class="hero-copy">
-    <p class="eyebrow" style="color:#C8A6FF">Human &middot; WGS</p>
-    <h1>Whole-genome sequencing</h1>
-    <p class="lead">Every base, coding and non-coding, in a single pass.</p>
+    <p class="eyebrow" style="color:var(--tint)">Human · WGS pipeline</p>
+    <h1>Run a whole-genome pipeline.</h1>
+    <p class="lead">Upload FASTQ reads and take them through alignment, variant calling, annotation and interpretation. Stop at any stage and download what it produced, or interpret a VCF you already have.</p>
+    <div class="cta">
+      <a class="btn" href="#pipeline">Run from FASTQ</a>
+      <a class="btn btn--ghost" href="#interpret">Interpret a VCF</a>
+      <a class="link" href="index.html#genomics">All genomic tests</a>
+    </div>
   </div>
-  <div class="hero-field">
-    <canvas data-field data-shape="helix" data-color="#C8A6FF"></canvas>
-  </div>
-  <div class="cue"><i></i>Scroll</div>
+  <div class="hero-field"><canvas data-field data-shape="helix" data-color="#C8A6FF" aria-hidden="true"></canvas></div>
+</div>
+<button type="button" class="motion" aria-pressed="false">Pause motion</button>
 </section>
 
-<section class="s s-light" id="pipeline">
-  <div class="wrap rise">
-    <p class="eyebrow">Run</p>
-    <h2>Choose how far<br>to take your reads.</h2>
-    <p class="lead">Drop your FASTQ files in, then pick the stage to stop at.
-      Everything up to it runs; everything after is left alone.</p>
+<section class="s s-light" id="pipeline"><div class="wrap rise">
+  <p class="eyebrow">Run</p>
+  <h2>Start with what you have.</h2>
+  <p class="lead">Raw reads go through the whole pipeline. A VCF you already hold starts at interpretation.</p>
+
+  <div class="conn" id="conn" role="status">
+    <span id="badge" class="badge badge--wait">Checking for a pipeline…</span>
+    <span id="conn-text"></span>
+  </div>
+  <details class="conn-set" id="conn-set" hidden>
+    <summary>Connect a pipeline service</summary>
+    <label for="api-url">Pipeline URL</label>
+    <input id="api-url" type="url" placeholder="http://localhost:8000/api/runs" spellcheck="false" autocomplete="off">
+    <button type="button" class="btn-sm" id="api-save">Connect</button>
+    <p class="runopt-note">Saved in this browser only. The page reloads to use it.</p>
+  </details>
+
+  <div class="seg seg--light" role="tablist" aria-label="Start from">
+    <button type="button" role="tab" id="tab-fastq" aria-selected="true" aria-controls="run-fastq">I have FASTQ reads</button>
+    <button type="button" role="tab" id="tab-vcf" aria-selected="false" aria-controls="interpret" tabindex="-1">I already have a VCF</button>
+  </div>
+  <p class="seg-help" id="seg-help">Upload FASTQ, choose where the pipeline stops, download every stage it produces.</p>
+
+  <div id="run-fastq" role="tabpanel" aria-labelledby="tab-fastq">
+    <ol class="stepper" id="stepper">
+      <li id="st-files"><b>1</b> Upload reads <span class="st-val">none yet</span></li>
+      <li id="st-stop"><b>2</b> Choose where to stop <span class="st-val">not chosen</span></li>
+      <li id="st-opts"><b>3</b> Run details <span class="st-val">optional</span></li>
+    </ol>
+
+    <div class="flow" id="flow" role="radiogroup" aria-labelledby="flow-label" aria-describedby="flow-help">
+      <i class="flow-fill" id="fill"></i>
+      <div class="node node--input sel" data-stage="fastq">
+        <span class="node-dot">01</span>
+        <div>
+          <p class="flow-label">Step 1 · Upload reads</p>
+          <h3 id="st-fastq">FASTQ</h3><span class="node-count" id="fcount" hidden></span>
+          <p>Raw reads off the sequencer, R1 and R2 together.</p>
+          <label class="drop drop--inline" id="drop">
+            <input type="file" id="fq" accept=".fastq,.fq,.gz" multiple aria-describedby="drop-hint">
+            <span class="btn-sm" aria-hidden="true">Choose files</span>
+            <span class="drop-hint" id="drop-hint">or drop your FASTQ files here. .fastq or .fq, gzipped or not. More than one file is fine.</span>
+            <span class="drop-name" id="fname" role="status"></span>
+            <span class="drop-meta" id="fmeta" hidden></span>
+          </label>
+          <p class="runopt-note">Already have variants? <a class="link" href="#interpret">Switch to Interpret a VCF</a></p>
+        </div>
+      </div>
+      <p class="flow-label" id="flow-label">Step 2 · Choose where to stop</p>
+      <p class="flow-help" id="flow-help">Every stage before it runs, and each can be downloaded when it finishes.</p>
+      <div class="node node--pick" data-stage="bam">
+        <span class="node-dot">02</span>
+        <div><h3 id="st-bam">BAM</h3><p>Reads aligned to the reference genome.</p></div>
+        <span class="node-act">
+          <button type="button" class="btn-sm tohere" role="radio" aria-checked="false" data-pick="bam" id="pick-bam" aria-labelledby="st-bam pick-bam">Stop at BAM</button>
+          <span class="node-state" data-state></span>
+          <a class="btn-sm dl" data-dl="bam" hidden>Download</a>
+        </span>
+      </div>
+      <div class="node node--pick" data-stage="vcf">
+        <span class="node-dot">03</span>
+        <div><h3 id="st-vcf">VCF</h3><p>Variants called from the alignment.</p></div>
+        <span class="node-act">
+          <button type="button" class="btn-sm tohere" role="radio" aria-checked="false" data-pick="vcf" id="pick-vcf" aria-labelledby="st-vcf pick-vcf">Stop at VCF</button>
+          <span class="node-state" data-state></span>
+          <a class="btn-sm dl" data-dl="vcf" hidden>Download</a>
+        </span>
+      </div>
+      <div class="node node--pick" data-stage="avcf">
+        <span class="node-dot">04</span>
+        <div><h3 id="st-avcf">Annotated VCF</h3><p>Variants annotated against current references.</p></div>
+        <span class="node-act">
+          <button type="button" class="btn-sm tohere" role="radio" aria-checked="false" data-pick="avcf" id="pick-avcf" aria-labelledby="st-avcf pick-avcf">Stop at Annotated VCF</button>
+          <span class="node-state" data-state></span>
+          <a class="btn-sm dl" data-dl="avcf" hidden>Download</a>
+        </span>
+      </div>
+      <div class="node node--pick" data-stage="interp">
+        <span class="node-dot">05</span>
+        <div><h3 id="st-interp">Interpretation</h3><p>Findings graded by their evidence, from a fixed evidence base. Not a diagnosis; requires clinical review.</p></div>
+        <span class="node-act">
+          <button type="button" class="btn-sm tohere" role="radio" aria-checked="false" data-pick="interp" id="pick-interp" aria-labelledby="st-interp pick-interp">Stop at Interpretation</button>
+          <span class="node-state" data-state></span>
+          <a class="btn-sm dl" data-dl="interp" hidden>Download</a>
+        </span>
+      </div>
+    </div>
+
+    <fieldset class="runopts" id="runopts" hidden>
+      <legend>Step 3 · Run details</legend>
+      <div class="runopt">
+        <label for="sample">Sample ID <span class="opt">Optional</span></label>
+        <input type="text" id="sample" autocomplete="off" spellcheck="false" placeholder="e.g. S-2026-041">
+        <p class="runopt-note" id="sample-note">Letters, digits, - and _. Leave blank to use the FASTQ filename: fine for research, not a lab accession number.</p>
+      </div>
+      <div class="runopt" id="consent-opt" hidden>
+        <label for="consent">Consent to ACMG secondary findings</label>
+        <p class="runopt-note">Did the person consent to being told about ACMG secondary findings?</p>
+        <select id="consent">
+          <option value="not_recorded">Not recorded</option>
+          <option value="recorded">Consent given</option>
+          <option value="declined">Consent declined</option>
+        </select>
+        <p class="runopt-note" id="consent-note"></p>
+        <button type="button" class="btn-sm" id="consent-alt" hidden>Stop at Annotated VCF instead</button>
+      </div>
+    </fieldset>
+
+    <div class="modules" id="modules" hidden>
+      <h3>Reports to produce</h3>
+      <p class="modules-help">Tick the reports you want. Anything a report depends on is ticked for you.</p>
+      <p class="modules-lead" id="modules-lead"></p>
+      <div id="modules-list"></div>
+      <div class="modules-foot" id="modules-foot"></div>
+    </div>
+
+    <div class="actbar" id="actbar">
+      <button class="run" id="go" disabled>Start run</button>
+      <span class="note" id="note" role="status">Add FASTQ files and choose where to stop.</span>
+    </div>
 
     <div class="status" id="status" hidden>
-      <span id="badge" class="badge" hidden>Preview &mdash; no pipeline connected</span>
-      <span><span class="lbl">Stage</span><span class="val" id="s-stage">&mdash;</span></span>
+      <span id="status-badge" class="badge" hidden>Preview</span>
+      <span role="status"><span class="lbl">Stage</span><span class="val" id="s-stage">—</span></span>
       <span><span class="lbl">Elapsed</span><span class="val" id="s-time">0:00</span></span>
       <span class="bar"><i id="s-bar"></i></span>
     </div>
 
-    <div class="flow" id="flow" role="radiogroup" aria-label="Stage to run to">
-      <i class="flow-fill" id="fill"></i>
-      <div class="node node--input sel" data-stage="fastq">
-        <span class="node-dot">01</span>
-        <div><h3>FASTQ</h3><p>Raw reads off the sequencer.</p>
-          <label class="drop drop--inline" id="drop">
-            <input type="file" id="fq" accept=".fastq,.fq,.gz" multiple>
-            <span class="drop-hint">Drop FASTQ files here, or click to choose</span>
-            <span class="drop-name" id="fname" hidden></span>
-            <span class="drop-meta" id="fmeta" hidden></span>
-          </label>
-        </div>
-        <span class="node-tag">Input</span>
-      </div>
-      <div class="node node--pick off" data-stage="bam">
-        <span class="node-dot">02</span>
-        <div><h3>BAM</h3><p>Reads aligned to the reference.</p></div>
-        <span class="node-act">
-          <button type="button" class="btn-sm tohere" role="radio" aria-checked="false" data-pick="bam">Run to here</button>
-          <a class="btn-sm dl" href="#" data-dl="bam" aria-disabled="true" hidden>Download</a>
-        </span>
-      </div>
-      <div class="node node--pick off" data-stage="vcf">
-        <span class="node-dot">03</span>
-        <div><h3>VCF</h3><p>Variants called from the alignment.</p></div>
-        <span class="node-act">
-          <button type="button" class="btn-sm tohere" role="radio" aria-checked="false" data-pick="vcf">Run to here</button>
-          <a class="btn-sm dl" href="#" data-dl="vcf" aria-disabled="true" hidden>Download</a>
-        </span>
-      </div>
-      <div class="node node--pick off" data-stage="avcf">
-        <span class="node-dot">04</span>
-        <div><h3>Annotated VCF</h3><p>Variants annotated against current references.</p></div>
-        <span class="node-act">
-          <button type="button" class="btn-sm tohere" role="radio" aria-checked="false" data-pick="avcf">Run to here</button>
-          <a class="btn-sm dl" href="#" data-dl="avcf" aria-disabled="true" hidden>Download</a>
-        </span>
-      </div>
-      <div class="node node--pick off" data-stage="interp">
-        <span class="node-dot">05</span>
-        <div><h3>Interpretation</h3><p>Evidence-status findings from a frozen knowledgebase. Not a diagnosis; requires clinical review.</p></div>
-        <span class="node-act">
-          <button type="button" class="btn-sm tohere" role="radio" aria-checked="false" data-pick="interp">Run to here</button>
-          <a class="btn-sm dl" href="#" data-dl="interp" aria-disabled="true" hidden>Download</a>
-        </span>
-      </div>
-    </div>
-
-    <div class="runopts" id="runopts" hidden>
-      <div class="runopt">
-        <label for="sample">Sample identifier</label>
-        <input type="text" id="sample" autocomplete="off" spellcheck="false"
-               placeholder="derived from the filenames">
-        <p class="runopt-note" id="sample-note">Letters, digits, dash and
-          underscore. Leave it empty and the name is taken from the FASTQ
-          filenames, which is fine for research use but is not an accession.</p>
-      </div>
-      <div class="runopt" id="consent-opt" hidden>
-        <label for="consent">ACMG secondary findings</label>
-        <select id="consent">
-          <option value="not_recorded">Not recorded</option>
-          <option value="recorded">Recorded &mdash; the person consented</option>
-          <option value="declined">Declined</option>
-        </select>
-        <p class="runopt-note" id="consent-note"></p>
-      </div>
-    </div>
-
-    <div class="modules" id="modules" hidden>
-      <p class="modules-lead" id="modules-lead"></p>
-      <div id="modules-list"></div>
-      <p class="modules-foot" id="modules-foot"></p>
-    </div>
-
-    <div class="actbar" id="actbar">
-      <button class="run" id="go" disabled>Start processing</button>
-      <span class="note" id="note">Add your reads, then pick a stage.</span>
-    </div>
-
     <div class="actbar" id="livebar" hidden>
       <button class="restart" id="retrybtn" hidden>Retry from the failed step</button>
-      <button class="restart" id="again">Start another run</button>
-      <span class="note" id="live-note">Your reads are moving through the pipeline.</span>
+      <button class="restart" id="again">Cancel this run</button>
+      <span id="confirm" hidden>Stop the run? Finished stages are kept.
+        <button type="button" class="btn-sm" id="confirm-yes">Cancel run</button>
+        <button type="button" class="btn-sm" id="confirm-no">Keep running</button></span>
+      <span class="note" id="live-note" role="status">Your reads are moving through the pipeline.</span>
     </div>
+    <p class="note note--err" id="alert" role="alert" hidden></p>
+  </div>
 
-    <div id="prevruns" hidden style="margin-top:26px">
-      <h3 style="margin:0 0 4px">Previous runs</h3>
-      <p class="note" style="margin:0 0 6px">A failed run resumes from its
-        failed step &mdash; everything already finished is skipped.</p>
-      <div id="runlist"></div>
-      <button class="restart" id="runlist-refresh" style="margin-top:8px">Refresh</button>
-    </div>
-  </div>
-</section>
+  <div id="interpret" role="tabpanel" aria-labelledby="tab-vcf" hidden>
+    <h3 class="h-sm">Already have a VCF? Start at interpretation.</h3>
+    <p class="lead">Upload the annotated VCF and the normalised PASS VCF it was made from. Interpretation runs on its own: no alignment, no variant calling.</p>
+    <ul class="unlocks">
+      <li><strong>Annotated VCF + normalised PASS VCF</strong> → the interpretation reports</li>
+      <li><strong>Add the final BAM and its filtered VCF</strong> → the sample-entry checks and the clinical report chain</li>
+      <li><strong>Add a GVCF</strong> → the ancestry report</li>
+      <li><strong>No .bai?</strong> It is built for you.</li>
+      <li>Anything not uploaded drops the reports that need it; the run tells you which and why.</li>
+    </ul>
 
-<section class="s s-light" id="interpret">
-  <div class="wrap rise">
-    <h2>Interpret an annotated VCF</h2>
-    <p>Already have variants? Upload the VEP-annotated VCF and the normalised
-      PASS VCF it was annotated from, and the interpretation stage runs on its
-      own &mdash; no alignment, no variant calling. Add the final BAM and the
-      filtered VCF beside it and the sample-entry gate and clinical chain run
-      too; add the GVCF and ancestry does. Anything not uploaded simply drops
-      the modules that read it, and the run says which and why. Missing
-      indexes are built automatically.</p>
-    <div class="runopts" style="display:block">
+    <fieldset class="fields"><legend>Step 1 · Required</legend><div class="fgrid">
       <div class="runopt">
-        <label for="iavcf">Annotated VCF (.vcf.gz, required)</label>
-        <input type="file" id="iavcf" accept=".gz">
+        <label for="iavcf">Annotated VCF <span class="req">Required</span></label>
+        <div class="file"><input type="file" id="iavcf" accept=".gz" aria-required="true" aria-describedby="iavcf-note"><label class="btn-sm" for="iavcf">Choose file</label><span class="file-name" aria-live="polite">No file chosen</span></div>
+        <p class="runopt-note" id="iavcf-note">.vcf.gz, VEP-annotated.</p>
       </div>
       <div class="runopt">
-        <label for="invcf">Normalised PASS VCF (.vcf.gz, required)</label>
-        <input type="file" id="invcf" accept=".gz">
+        <label for="invcf">Normalised PASS VCF <span class="req">Required</span></label>
+        <div class="file"><input type="file" id="invcf" accept=".gz" aria-required="true" aria-describedby="invcf-note"><label class="btn-sm" for="invcf">Choose file</label><span class="file-name" aria-live="polite">No file chosen</span></div>
+        <p class="runopt-note" id="invcf-note">.vcf.gz, the file the annotated VCF was made from.</p>
+      </div>
+    </div></fieldset>
+
+    <fieldset class="fields"><legend>Step 2 · Optional, unlocks more reports</legend><div class="fgrid">
+      <div class="runopt runopt--pair">
+        <div>
+          <label for="ibam">Final BAM <span class="opt">Optional</span></label>
+          <div class="file"><input type="file" id="ibam" accept=".bam" aria-describedby="pair-note"><label class="btn-sm" for="ibam">Choose file</label><span class="file-name" aria-live="polite">No file chosen</span></div>
+        </div>
+        <div>
+          <label for="ifiltered">Filtered VCF <span class="opt">With BAM</span></label>
+          <div class="file"><input type="file" id="ifiltered" accept=".gz" aria-describedby="pair-note"><label class="btn-sm" for="ifiltered">Choose file</label><span class="file-name" aria-live="polite">No file chosen</span></div>
+        </div>
+        <p class="runopt-note" id="pair-note">Upload these two together. They unlock the sample-entry checks and the clinical report chain.</p>
       </div>
       <div class="runopt">
-        <label for="ibam">Final BAM (optional; unlocks the clinical chain)</label>
-        <input type="file" id="ibam" accept=".bam">
+        <label for="ibai">BAM index <span class="opt">Optional</span></label>
+        <div class="file"><input type="file" id="ibai" accept=".bai" aria-describedby="ibai-note"><label class="btn-sm" for="ibai">Choose file</label><span class="file-name" aria-live="polite">No file chosen</span></div>
+        <p class="runopt-note" id="ibai-note">.bai, built here if left out.</p>
       </div>
       <div class="runopt">
-        <label for="ifiltered">Filtered VCF (.vcf.gz; required beside the BAM)</label>
-        <input type="file" id="ifiltered" accept=".gz">
+        <label for="igvcf">GVCF <span class="opt">Optional</span></label>
+        <div class="file"><input type="file" id="igvcf" accept=".gz" aria-describedby="igvcf-note"><label class="btn-sm" for="igvcf">Choose file</label><span class="file-name" aria-live="polite">No file chosen</span></div>
+        <p class="runopt-note" id="igvcf-note">.g.vcf.gz, needed for the ancestry report.</p>
+      </div>
+    </div></fieldset>
+
+    <fieldset class="fields"><legend>Step 3 · Run details</legend><div class="fgrid">
+      <div class="runopt">
+        <label for="isample">Sample ID <span class="opt">Optional</span></label>
+        <input type="text" id="isample" autocomplete="off" spellcheck="false" placeholder="e.g. S-2026-041">
+        <p class="runopt-note">Letters, digits, - and _. Leave blank to use the annotated VCF's name: fine for research, not a lab accession number.</p>
       </div>
       <div class="runopt">
-        <label for="ibai">BAM index (.bai, optional; built here if left out)</label>
-        <input type="file" id="ibai" accept=".bai">
+        <label for="imodules">Reports to produce</label>
+        <select id="imodules"><option value="all">Every report the uploaded files allow</option><option value="core">Core clinical reports only</option></select>
       </div>
       <div class="runopt">
-        <label for="igvcf">GVCF (.g.vcf.gz, optional; ancestry reads it)</label>
-        <input type="file" id="igvcf" accept=".gz">
+        <label for="iconsent">Consent to ACMG secondary findings</label>
+        <p class="runopt-note">Did the person consent to being told about ACMG secondary findings?</p>
+        <select id="iconsent"><option value="not_recorded">Not recorded</option><option value="recorded">Consent given</option><option value="declined">Consent declined</option></select>
+        <p class="runopt-note">Needed for clinical use. Stored with the run whichever you choose.</p>
       </div>
-      <div class="runopt">
-        <label for="isample">Sample identifier</label>
-        <input type="text" id="isample" autocomplete="off" spellcheck="false"
-               placeholder="derived from the annotated VCF's name">
-      </div>
-      <div class="runopt">
-        <label for="imodules">Modules</label>
-        <select id="imodules">
-          <option value="all">All reports the uploads can support</option>
-          <option value="core">Clinical chain only</option>
-        </select>
-      </div>
-      <div class="runopt">
-        <label for="iconsent">ACMG secondary findings</label>
-        <select id="iconsent">
-          <option value="not_recorded">Not recorded</option>
-          <option value="recorded">Recorded &mdash; the person consented</option>
-          <option value="declined">Declined</option>
-        </select>
-      </div>
-    </div>
-    <button class="run" id="igo">Interpret</button>
-    <button class="run" id="iretry" hidden>Retry from the failed step</button>
-    <span class="note" id="inote">Runs against the connected pipeline.</span>
-  </div>
-</section>
-<section class="s s-white">
-  <div class="wrap rise">
-    <div class="pager">
-      <a href="index.html#genomics"><span class="k">Back</span>
-        <span class="n">Genomics</span></a>
-      <a class="next" href="clinical.html"><span class="k">Related</span>
-        <span class="n">Clinical AI</span></a>
+    </div></fieldset>
+
+    <div class="actbar">
+      <button class="run" id="igo" disabled>Run interpretation</button>
+      <button class="restart" id="iretry" hidden>Retry from the failed step</button>
+      <span class="note" id="inote" role="status"></span>
     </div>
   </div>
-</section>
+
+  <div id="prevruns" hidden>
+    <h3>Previous runs on this pipeline</h3>
+    <p class="note">A failed run resumes from its failed step; everything already finished is kept.</p>
+    <div id="runlist"></div>
+    <button class="restart" id="runlist-refresh">Refresh</button>
+  </div>
+</div></section>
+
+<section class="s s-white" id="related"><div class="wrap rise">
+  <p class="eyebrow">Related</p>
+  <div class="cta">
+    <a class="btn-ghost" href="clinical.html">Clinical AI</a>
+    <a class="btn-ghost" href="research.html">Research AI</a>
+    <a class="btn-ghost" href="index.html#genomics">All genomic tests</a>
+  </div>
+</div></section>
 </main>
-<footer class="foot">
-  <div class="foot-in">
-    <div class="foot-cols"><div><h4>Intelligences</h4><ul><li><a href="research.html">Research</a></li><li><a href="therapeutics.html">Therapeutics</a></li><li><a href="stem-cell.html">Stem Cell</a></li><li><a href="veterinary.html">Veterinary</a></li><li><a href="clinical.html">Clinical</a></li><li><a href="cloud.html">Cloud</a></li></ul></div><div><h4>Genomics</h4><ul><li><a href="index.html#genomics">Human</a></li><li><a href="index.html#genomics">Horse</a></li><li><a href="index.html#genomics">Camel</a></li></ul></div><div><h4>Platform</h4><ul><li><a href="index.html">Overview</a></li><li><a href="index.html#substrate">Substrate</a></li><li><a href="cloud.html">The Cloud</a></li></ul></div></div>
-    <div class="foot-end">
-      <span>© 2026 Flopexa</span>
-      <span>One platform. Seven intelligences.</span>
-    </div>
-    <p class="fine" style="margin-top:12px">Product copy. Not a clinical or
-      regulatory claim.</p>
+<footer class="foot"><div class="foot-in">
+  <div class="foot-cols">
+    <div><h4>AI modules</h4><ul>
+      <li><a href="research.html">Research AI</a></li>
+      <li><a href="therapeutics.html">Therapeutics AI</a></li>
+      <li><a href="stem-cell.html">Stem Cell AI</a></li>
+      <li><a href="veterinary.html">Veterinary AI</a></li>
+      <li><a href="clinical.html">Clinical AI</a></li></ul></div>
+    <div><h4>Run an analysis</h4><ul>
+      <li><a href="human-wgs.html">Human WGS — run online</a></li>
+      <li><a href="human-wgs.html#interpret">Interpret a VCF</a></li>
+      <li><a href="index.html?sp=human#genomics">Human tests</a></li>
+      <li><a href="index.html?sp=horse#genomics">Horse tests</a></li>
+      <li><a href="index.html?sp=camel#genomics">Camel tests</a></li></ul></div>
+    <div><h4>Platform</h4><ul>
+      <li><a href="index.html">Overview</a></li>
+      <li><a href="index.html#platform">The five AI modules</a></li>
+      <li><a href="index.html#substrate">How data is shared</a></li>
+      <li><a href="cloud.html">Flopexa Cloud</a></li></ul></div>
+    <div data-contact-col hidden><h4>Company</h4><ul>
+      <li><a href="#" data-contact data-subject="Flopexa" hidden>Contact</a></li></ul></div>
   </div>
-</footer>
+  <div class="foot-end"><span>© 2026 Flopexa</span><span>One platform. Five AI modules. One data layer.</span></div>
+  <p class="fine">Product copy. Not a clinical or regulatory claim.</p>
+</div></footer>
 <script src="assets/field.js"></script>
+<script src="assets/site.js"></script>
 <script>
+/* Route switch: the two tabs toggle `hidden` on the two panels. The hash and the
+   tabs stay in sync both ways. A tab writes the hash with pushState, so no
+   fragment navigation scrolls the panel under the sticky bars and the focused
+   tab off the screen. An inbound hash (load, link, back/forward) un-hides its
+   panel first and then scrolls: #interpret lands on the tool's top line so the
+   tabs stay visible above the panel. */
 (function(){
-  if(window.FlopexaField)FlopexaField.mountAll();
+  var tabs=[document.getElementById("tab-fastq"),document.getElementById("tab-vcf")],
+      panels=[document.getElementById("run-fastq"),document.getElementById("interpret")],
+      help=document.getElementById("seg-help"),
+      HELP=["Upload FASTQ, choose where the pipeline stops, download every stage it produces.",
+            "Already have a VEP-annotated VCF? Run interpretation alone: no alignment, no variant calling."],
+      HASH=["#pipeline","#interpret"], cur=-1;
+  if(!tabs[0]||!tabs[1]||!panels[0]||!panels[1])return;
 
-  var io=new IntersectionObserver(function(es){
-    es.forEach(function(e){if(e.isIntersecting){e.target.classList.add("in");
-      io.unobserve(e.target);}});},{rootMargin:"0px 0px -12% 0px"});
-  document.querySelectorAll(".rise").forEach(function(n){io.observe(n);});
-
-  var sc=document.querySelector(".stage-sticky canvas");
-  if(sc&&window.FlopexaField){
-    var f=FlopexaField.get(sc);
-    var po=new IntersectionObserver(function(es){
-      es.forEach(function(e){
-        if(!e.isIntersecting||!f)return;
-        var d=e.target.dataset;
-        f.set(d.shape,d.color);
-        f.view(parseFloat(d.zoom)||1,parseFloat(d.cx));
-      });},{rootMargin:"-45% 0px -45% 0px"});
-    document.querySelectorAll(".panel[data-shape]").forEach(function(n){
-      po.observe(n);});
+  function mode(v){
+    var i=v==="vcf"?1:0;
+    tabs.forEach(function(t,j){t.setAttribute("aria-selected",j===i?"true":"false");t.tabIndex=j===i?0:-1;});
+    panels.forEach(function(p,j){p.hidden=j!==i;});
+    if(help&&help.textContent!==HELP[i])help.textContent=HELP[i];
+    document.querySelectorAll(".subnav nav a").forEach(function(a){
+      a.classList.toggle("on",a.getAttribute("href")===HASH[i]);});
+    /* the pipeline script measures the rail on resize; a display:none #flow measures 0 */
+    if(i===0&&cur!==0)window.dispatchEvent(new Event("resize"));
+    cur=i;
   }
-
-  var sn=document.querySelector(".subnav");
-  if(sn){
-    var links=[].slice.call(sn.querySelectorAll("a"));
-    var secs=links.map(function(a){
-      return document.querySelector(a.getAttribute("href"));});
-    var spy=new IntersectionObserver(function(es){
-      es.forEach(function(e){
-        if(!e.isIntersecting)return;
-        var i=secs.indexOf(e.target);
-        if(i<0)return;
-        links.forEach(function(a,j){a.classList.toggle("on",j===i);});
-      });},{rootMargin:"-42% 0px -52% 0px"});
-    secs.forEach(function(s){if(s)spy.observe(s);});
+  /* layout position of an element (transform-free, so a .rise reveal still in
+     flight does not shift the landing) and the sticky bars' height above it */
+  function topOf(el){var y=0;for(var n=el;n;n=n.offsetParent)y+=n.offsetTop;return y;}
+  function barOf(){var sec=document.getElementById("pipeline");return sec?parseFloat(getComputedStyle(sec).scrollMarginTop)||0:0;}
+  function jump(h,instant){
+    var b=(instant||window.flopexaStill)?"auto":"smooth";
+    if(h==="#interpret"){
+      var c=document.getElementById("conn");
+      if(c)window.scrollTo({top:Math.max(0,topOf(c)-barOf()),behavior:b});
+      return;
+    }
+    var t=h&&h.length>1?document.getElementById(h.slice(1)):null;
+    if(t)t.scrollIntoView({behavior:b});
   }
+  function activate(i){
+    mode(i?"vcf":"fastq");
+    if(location.hash!==HASH[i]){
+      try{history.pushState(null,"",HASH[i]);}catch(e){location.hash=HASH[i];}
+    }
+    tabs[i].focus({preventScroll:true});
+  }
+  tabs.forEach(function(t,i){
+    t.addEventListener("click",function(){activate(i);});
+    t.addEventListener("keydown",function(e){
+      var k=e.key,n=null;
+      if(k==="ArrowRight"||k==="ArrowDown"||k==="ArrowLeft"||k==="ArrowUp")n=(i+1)%2;
+      else if(k==="Home")n=0;
+      else if(k==="End")n=1;
+      if(n===null)return;
+      e.preventDefault();activate(n);
+    });
+  });
+  function fromHash(first){
+    var h=location.hash;
+    if(h==="#interpret")mode("vcf");
+    else if(h==="#pipeline"||!h||cur<0)mode("fastq");   /* no hash (load, or Back to it) is the FASTQ route */
+    if(!h)return;
+    if(first&&h==="#interpret")land(h); else if(!first)jump(h);
+  }
+  /* A load with #interpret: the panel it names is hidden until mode() runs, and
+     the browser would keep scrolling to it by itself (on every layout until the
+     page has loaded), burying the tabs under the sticky bars. So the fragment
+     is taken off the URL before the parser finishes, which cancels that scroll,
+     the tool is landed with its tabs in view, and the hash is put back on load. */
+  function land(h){
+    try{history.replaceState(null,"",location.pathname+location.search);}catch(e){jump(h);return;}
+    jump(h,true);
+    function done(){
+      if(!location.hash){try{history.replaceState(null,"",h);}catch(e){}}
+      var seg=document.querySelector(".seg--light");
+      if(cur===1&&seg&&topOf(seg)-window.pageYOffset<barOf())jump(h,true);
+    }
+    if(document.readyState==="complete")done(); else addEventListener("load",function(){setTimeout(done,0);});
+  }
+  addEventListener("hashchange",function(){fromHash(false);});
+  /* In-page links to #interpret (hero, subnav, the "Switch to" line, nav and
+     footer) land the same way as the tab: a plain fragment navigation would
+     scroll the panel under the sticky bars, and fires nothing when the hash is
+     already #interpret. Modified clicks (new tab, etc.) are left to the browser. */
+  document.addEventListener("click",function(e){
+    if(e.defaultPrevented||e.button!==0||e.metaKey||e.ctrlKey||e.shiftKey||e.altKey)return;
+    var a=e.target&&e.target.closest?e.target.closest("a[href]"):null;
+    if(!a||a.hash!=="#interpret"||a.pathname!==location.pathname||a.search!==location.search||a.target)return;
+    e.preventDefault();
+    mode("vcf");
+    /* the focus moves with the activation, as a native fragment navigation
+       would move it: the selected tab is the roving stop, so the next Tab
+       enters the VCF panel (the same landing as activate()) */
+    tabs[1].focus({preventScroll:true});
+    if(location.hash!=="#interpret"){try{history.pushState(null,"","#interpret");}catch(x){location.hash="#interpret";return;}}
+    jump("#interpret");
+  });
+  fromHash(true);
 })();
 </script>
 <script>
@@ -288,20 +443,6 @@
     return meta&&meta.content?trim(meta.content):"";
   })();
 
-  /* Served by the pipeline service? Then it is on this origin already. */
-  if(!PIPELINE_ENDPOINT&&/^https?:$/.test(location.protocol)){
-    fetch(new URL("api/health",location.href).href)
-      .then(function(r){return r.ok?r.json():null;})
-      .then(function(j){
-        if(j&&j.status==="ok"){
-          PIPELINE_ENDPOINT=new URL("api/runs",location.href).href;
-          loadModules();
-          loadRuns();
-        }
-      })
-      .catch(function(){/* no service here; the preview stands */});
-  }
-
   var flow=document.getElementById("flow"), fill=document.getElementById("fill"),
       drop=document.getElementById("drop"), input=document.getElementById("fq"),
       fname=document.getElementById("fname"), fmeta=document.getElementById("fmeta"),
@@ -316,18 +457,75 @@
       runOpts=document.getElementById("runopts"), sampleIn=document.getElementById("sample"),
       sampleNote=document.getElementById("sample-note"),
       consentOpt=document.getElementById("consent-opt"), consentIn=document.getElementById("consent"),
-      consentNote=document.getElementById("consent-note");
+      consentNote=document.getElementById("consent-note"),
+      /* clarity pass: connection line, stepper, state words, confirm, alert */
+      connText=document.getElementById("conn-text"), connSet=document.getElementById("conn-set"),
+      apiUrl=document.getElementById("api-url"), apiSave=document.getElementById("api-save"),
+      statusBadge=document.getElementById("status-badge"),
+      stFiles=document.getElementById("st-files"), stStop=document.getElementById("st-stop"),
+      stOpts=document.getElementById("st-opts"),
+      fcount=document.getElementById("fcount"), dropHint=document.getElementById("drop-hint"),
+      consentAlt=document.getElementById("consent-alt"),
+      alertEl=document.getElementById("alert"), confirmEl=document.getElementById("confirm"),
+      confirmYes=document.getElementById("confirm-yes"), confirmNo=document.getElementById("confirm-no"),
+      retryBtn=document.getElementById("retrybtn"),
+      prevruns=document.getElementById("prevruns"), runlist=document.getElementById("runlist"),
+      runlistRefresh=document.getElementById("runlist-refresh"),
+      interp=document.getElementById("interpret"),
+      igo=document.getElementById("igo"), inote=document.getElementById("inote"),
+      iretry=document.getElementById("iretry");
 
-  /* An endpoint named in the meta tag is known before the health probe. */
-  if(PIPELINE_ENDPOINT)setTimeout(function(){loadModules();loadRuns();},0);
+  /* a live region is re-announced only when its text changes */
+  function say(el,t){if(el&&el.textContent!==t)el.textContent=t;}
+  function msg(e){return e&&e.message?e.message:String(e);}
+  function stVal(li,t,done){say(li.querySelector(".st-val"),t);li.classList.toggle("done",!!done);}
+
+  /* ── connection line: checking | preview | connected | silent ───── */
+  var connState="checking", connHost="";
+  function hostOf(u){try{return new URL(u,location.href).hostname||u;}catch(e){return u;}}
+  function setConn(state,host){
+    connState=state;connHost=host||"";
+    badge.className="badge"+(state==="checking"?" badge--wait":state==="connected"?" badge--ok":state==="silent"?" badge--bad":"");
+    say(badge, state==="checking"?"Checking for a pipeline…"
+      : state==="preview"?"Preview — no pipeline connected"
+      : state==="connected"?"Connected":"Not answering");
+    say(connText, state==="preview"?"You can walk through the flow. Nothing is uploaded and no files are produced."
+      : state==="connected"?"Pipeline at "+connHost+". Files you add are uploaded to it."
+      : state==="silent"?"A pipeline is set at "+connHost+" but did not answer. Runs will be attempted anyway."
+      : "");
+    connSet.hidden=!(state==="preview"||state==="silent");
+    if(state==="silent"&&apiUrl&&!apiUrl.value)apiUrl.value=PIPELINE_ENDPOINT;
+    sync();isync();
+  }
+  function saveEndpoint(){
+    var v=(apiUrl.value||"").trim();
+    try{if(v)localStorage.setItem("flopexaPipeline",v);else localStorage.removeItem("flopexaPipeline");}catch(e){}
+    /* the resolver reads ?api= before storage: a page opened with one leaves
+       the parameter behind, otherwise it would reload onto the same endpoint */
+    try{
+      var u=new URL(location.href);
+      if(u.searchParams.has("api")){u.searchParams.delete("api");location.replace(u.href);return;}
+    }catch(e){}
+    location.reload();
+  }
+  if(apiSave)apiSave.addEventListener("click",saveEndpoint);
+  if(apiUrl)apiUrl.addEventListener("keydown",function(e){if(e.key==="Enter"){e.preventDefault();saveEndpoint();}});
 
   var nodes=[].slice.call(flow.querySelectorAll(".node"));
   var order=nodes.map(function(n){return n.dataset.stage;});
   var labelOf={};
   nodes.forEach(function(n){labelOf[n.dataset.stage]=n.querySelector("h3").textContent;});
+  var verb={bam:"Aligning reads",vcf:"Calling variants",avcf:"Annotating variants",interp:"Interpreting"};
 
-  var files=[], step=null, running=false, t0=0, timer=null, poll=null, runId=null;
-  var lastTarget=0;
+  var files=[], step=null, running=false, live=false, previewRun=false,
+      t0=0, timer=null, poll=null, runId=null;
+  var lastTarget=0, lastReached=0, lastUrls=null;
+  /* runSeq is bumped by every reset: a request started under an older value
+     answers a run the operator has already left, so its result is dropped and
+     a run it created is cancelled. fillTo is what the rail last drew: the
+     chosen stop before a run, the reached stage during and after one. */
+  var runSeq=0, fillTo=0;
+  var DEFAULT_HINT=dropHint?dropHint.textContent:"";
 
   function size(b){
     var u=["B","KB","MB","GB","TB"],i=0;
@@ -345,25 +543,27 @@
     var v=sampleIn.value.trim();
     if(!v||step!=="interp")return "";
     return SAMPLE_RE.test(v) ? ""
-      : "An interpretation run mints this into every product name: letters, "+
-        "digits, dash and underscore only, starting with a letter or digit, "+
-        "up to 64 characters.";
+      : "Used in every report and filename. Letters, digits, - and _ only, "+
+        "starting with a letter or digit, up to 64 characters.";
   }
 
   function take(list){
     var good=[].slice.call(list).filter(function(f){return isFastq(f.name);});
     if(!good.length){
-      fname.hidden=false;fname.className="drop-name drop-err";
-      fname.textContent="Those are not FASTQ files";
-      fmeta.hidden=true;files=[];sync();return;
+      fname.className="drop-name drop-err";
+      say(fname,"Those are not FASTQ files. Expected .fastq, .fq or .fastq.gz.");
+      fmeta.hidden=true;fmeta.textContent="";
+      fcount.hidden=true;fcount.textContent="";
+      say(dropHint,DEFAULT_HINT);
+      files=[];sync();return;
     }
     files=good;
     var total=good.reduce(function(a,f){return a+f.size;},0);
-    fname.hidden=false;fname.className="drop-name";
-    fname.textContent=good.length===1?good[0].name:good.length+" files";
-    fmeta.hidden=false;
-    fmeta.textContent=(good.length>1
-      ? good.map(function(f){return f.name;}).join(" \u00b7 ")+" \u2014 " : "")+size(total);
+    fname.className="drop-name";
+    say(fname,good.map(function(f){return f.name;}).join(" · "));
+    fmeta.hidden=false;say(fmeta,size(total)+" total");
+    fcount.hidden=false;say(fcount,"· "+good.length+(good.length===1?" file":" files"));
+    say(dropHint,"Drop or choose different files to replace these.");
     sync();
   }
   input.addEventListener("change",function(){take(input.files);});
@@ -373,29 +573,38 @@
     drop.addEventListener(e,function(ev){ev.preventDefault();drop.classList.remove("over");});});
   drop.addEventListener("drop",function(ev){take(ev.dataTransfer.files);});
 
-  /* the whole row selects, so the target is picked on the diagram itself */
+  /* the whole row selects, so the target is picked on the diagram itself;
+     the radio in the row takes the arrow keys (keys in the hidden #fq never do) */
   nodes.forEach(function(n){
     if(!n.classList.contains("node--pick"))return;
     n.addEventListener("click",function(){ if(!running) choose(n.dataset.stage); });
-  });
-  flow.addEventListener("keydown",function(e){
-    if(running)return;
-    var picks=order.slice(1), i=picks.indexOf(step);
-    if(e.key==="ArrowDown"||e.key==="ArrowRight"){
-      e.preventDefault();choose(picks[Math.min(picks.length-1,i+1)]||picks[0]);}
-    if(e.key==="ArrowUp"||e.key==="ArrowLeft"){
-      e.preventDefault();choose(picks[Math.max(0,i-1)]||picks[0]);}
+    var b=n.querySelector(".tohere");
+    if(b)b.addEventListener("keydown",function(e){
+      if(running)return;
+      var picks=order.slice(1), i=picks.indexOf(step), k=e.key, s=null;
+      if(k==="ArrowDown"||k==="ArrowRight")s=picks[Math.min(picks.length-1,i+1)];
+      else if(k==="ArrowUp"||k==="ArrowLeft")s=picks[Math.max(0,i-1)];
+      else if(k==="Home")s=picks[0];
+      else if(k==="End")s=picks[picks.length-1];
+      if(!s)return;
+      e.preventDefault();choose(s);
+      var c=flow.querySelector('.tohere[aria-checked="true"]');if(c)c.focus();
+    });
   });
 
   function choose(s){ step=s; sync(); showModules(); }
+  if(consentAlt)consentAlt.addEventListener("click",function(){
+    choose("avcf");
+    var c=flow.querySelector('.tohere[aria-checked="true"]');if(c)c.focus();
+  });
 
-  /* ── interpretation modules ───────────────────────────────────
-     The catalogue is the service's, not the page's: which modules
+  /* ── interpretation reports ───────────────────────────────────
+     The catalogue is the service's, not the page's: which reports
      exist, what each may claim, and why any is unavailable all come
      from GET /api/pipeline. The page renders it verbatim -- softening
-     a module's own caveat here would be the page overclaiming on the
+     a report's own caveat here would be the page overclaiming on the
      pipeline's behalf. */
-  var catalogue=null, picked={};
+  var catalogue=null, picked={}, addedBy={};
 
   function loadModules(){
     if(!PIPELINE_ENDPOINT)return;
@@ -407,15 +616,25 @@
         (catalogue.default||[]).forEach(function(id){picked[id]=true;});
         renderModules();showModules();
       })
-      .catch(function(){/* the run still works; it just carries no modules */});
+      .catch(function(){/* the run still works; it just carries no reports */});
   }
 
+  var openMore={};
   function renderModules(){
     if(!catalogue)return;
+    /* an "Added — needed by" note lives only while its report is still ticked */
+    Object.keys(addedBy).forEach(function(id){if(!picked[id])delete addedBy[id];});
+    /* every Details the operator opened stays open across the rebuild */
+    openMore={};
+    [].slice.call(modList.querySelectorAll(".mod-more[open]")).forEach(function(d){
+      var row=d.closest(".mod"), b=row&&row.querySelector("input");
+      if(b)openMore[b.value]=true;
+    });
     var groups=[], byGroup={};
     (catalogue.modules||[]).forEach(function(m){
-      if(!byGroup[m.group]){byGroup[m.group]=[];groups.push(m.group);}
-      byGroup[m.group].push(m);
+      var g=m.group||"Reports";
+      if(!byGroup[g]){byGroup[g]=[];groups.push(g);}
+      byGroup[g].push(m);
     });
     modList.textContent="";
     groups.forEach(function(name){
@@ -427,11 +646,25 @@
       byGroup[name].forEach(function(m){box.appendChild(moduleRow(m));});
       modList.appendChild(box);
     });
-    var later=(catalogue.not_in_this_release||[]).length;
-    modFoot.textContent = later
-      ? later+" further modules exist in the interpretation deck but are not part of "+
-        "this release. GET /api/pipeline says which, and why."
-      : "";
+    var extra=catalogue.not_in_this_release||[], later=extra.length;
+    modFoot.textContent="";
+    if(later){
+      modFoot.appendChild(document.createTextNode(
+        later+" more report type"+(later>1?"s exist but are":" exists but is")+
+        " not included in this release."));
+      var det=document.createElement("details"), sum=document.createElement("summary");
+      sum.textContent="Which ones";
+      det.appendChild(sum);
+      var ul=document.createElement("ul");
+      extra.forEach(function(x){
+        var li=document.createElement("li");
+        li.textContent=(x&&(x.title||x.id))||String(x);
+        if(x&&x.reason)li.textContent+=" — "+x.reason;
+        ul.appendChild(li);
+      });
+      det.appendChild(ul);
+      modFoot.appendChild(det);
+    }
   }
 
   function closeOver(id){
@@ -442,7 +675,7 @@
       var m=by[pending.pop()];
       if(!m)continue;
       (m.requires||[]).forEach(function(need){
-        if(!picked[need]){picked[need]=true;pending.push(need);}
+        if(!picked[need]){picked[need]=true;addedBy[need]=m.title||m.id;pending.push(need);}
       });
     }
   }
@@ -457,50 +690,39 @@
     box.disabled=!m.available;
     box.addEventListener("change",function(){
       picked[m.id]=box.checked;
-      /* selecting a module selects what it reads, all the way down: the
+      delete addedBy[m.id];
+      /* selecting a report selects what it reads, all the way down: the
          service closes the set anyway, and showing that here is less
          surprising than a run that quietly grew. The chains are several deep
          -- the wellbeing report reads nutrition and fitness, which read the
          association matcher -- so one level would under-report the run. */
       if(box.checked)closeOver(m.id);
       renderModules();
+      /* the rebuild replaced this box: keep the keyboard where it was */
+      var f=modList.querySelector('input[value="'+m.id+'"]');
+      if(f)f.focus({preventScroll:true});
     });
     var text=document.createElement("div");
     var name=document.createElement("span");
     name.className="mod-name";
-    name.textContent=m.title;
+    name.textContent=m.title||m.id;
     text.appendChild(name);
-    var id=document.createElement("span");
-    id.className="mod-id";
-    id.textContent=m.id;
-    text.appendChild(id);
     if(m.maturity==="review_only"){
       var flag=document.createElement("span");
       flag.className="mod-flag";
-      flag.textContent="Review copy";
+      flag.textContent="Review only";
+      flag.title="The pipeline marks this report as review-only.";
       text.appendChild(flag);
     }
-    /* A module still carrying literals from the genome the deck was written
+    /* A report still carrying literals from the genome it was written
        against will pass on that sample and fail on another. The catalogue
        publishes the count precisely so a chooser can see it. */
     if(m.residual_literals>0){
       var res=document.createElement("span");
       res.className="mod-flag mod-flag--warn";
-      res.textContent=m.residual_literals+" fixed value"+(m.residual_literals>1?"s":"");
-      res.title="Values naming one sample or one knowledgebase build, still "+
-                "hardcoded in this module. See VENDOR_REPORT.tsv.";
+      res.textContent=m.residual_literals+" hard-coded value"+(m.residual_literals>1?"s":"");
+      res.title="Still contains values specific to one sample or evidence build; may not apply to yours.";
       text.appendChild(res);
-    }
-    /* A script this service corrected is not the deck author's byte for byte,
-       and the module still reports the author's version, so this is the only
-       place the difference shows. */
-    if((m.patches||[]).length){
-      var pat=document.createElement("span");
-      pat.className="mod-flag";
-      pat.textContent="Corrected";
-      pat.title="Vendored with "+m.patches.length+" correction"+
-                (m.patches.length>1?"s":"")+": "+m.patches.join(", ");
-      text.appendChild(pat);
     }
     (m.caveats||[]).forEach(function(c){
       var note=document.createElement("p");
@@ -508,19 +730,36 @@
       note.textContent=c;
       text.appendChild(note);
     });
-    if(m.script_version){
-      var ver=document.createElement("p");
-      ver.className="mod-note mod-note--meta";
-      ver.textContent="Script "+m.id+" v"+m.script_version+
-        ((m.inputs||[]).length ? " \u00b7 reads "+m.inputs.join(", ") : "");
-      text.appendChild(ver);
-    }
     if(!m.available&&m.unavailable_reason){
       var why=document.createElement("p");
       why.className="mod-note";
       why.textContent="Unavailable: "+m.unavailable_reason;
       text.appendChild(why);
     }
+    if(m.available&&picked[m.id]&&addedBy[m.id]){
+      var add=document.createElement("p");
+      add.className="mod-note";
+      add.textContent="Added — needed by "+addedBy[m.id];
+      text.appendChild(add);
+    }
+    /* identity, corrections and version live behind Details */
+    var more=document.createElement("details"), sum=document.createElement("summary");
+    more.className="mod-more";
+    more.open=!!openMore[m.id];
+    sum.textContent="Details";
+    /* the row is a <label>: a plain click on the summary would also toggle the box */
+    sum.addEventListener("click",function(e){e.preventDefault();more.open=!more.open;});
+    more.appendChild(sum);
+    var lines=[m.id];
+    if((m.patches||[]).length)lines.push("Patched: "+m.patches.join(", "));
+    if(m.script_version)lines.push("Version "+m.script_version);
+    lines.forEach(function(t){
+      var p=document.createElement("p");
+      p.className="mod-note mod-note--meta";
+      p.textContent=t;
+      more.appendChild(p);
+    });
+    text.appendChild(more);
     row.appendChild(box);row.appendChild(text);
     return row;
   }
@@ -530,20 +769,20 @@
              (catalogue.modules||[]).length>0;
     modBox.hidden=!on;
     if(!on)return;
-    var release=catalogue.knowledgebase_release||"no knowledgebase release";
-    if(catalogue.qc_release)release+=" with "+catalogue.qc_release;
-    modLead.textContent =
+    var release=(catalogue.knowledgebase_release||"unversioned")+
+      (catalogue.qc_release?" with "+catalogue.qc_release:"");
+    say(modLead,
+      "Evidence base: "+release+" (fixed for this release). "+
       (catalogue.positioning==="clinical"
         ? "For clinical review. Nothing here is a diagnosis, and reports are "
         : "Research use only. Nothing here is a diagnosis or a clinical "+
           "recommendation, and reports are ")+
       (catalogue.release_mode==="manual"
-        ? "held until a reviewer releases them. "
-        : "released as soon as they are produced. ")+
-      "Evidence comes from "+release+", frozen.";
+        ? "held until a reviewer releases them."
+        : "released as soon as they are produced."));
   }
 
-  /* The service refuses a run it cannot finish and says why: which module is
+  /* The service refuses a run it cannot finish and says why: which report is
      blocked and by what, which WGS_VEP_EXPECTED_* setting is missing, why a
      declined consent cannot be honoured, why a sample name will not do. All of
      that arrives as {"detail": ...}; rejecting on the status code alone threw
@@ -578,110 +817,180 @@
     fill.style.height=Math.max(0,bot-top)+"px";
   }
 
+  function produced(){
+    var l=order.slice(1,order.indexOf(step)+1).map(function(k){return labelOf[k];});
+    return l.length>1 ? l.slice(0,-1).join(", ")+" and "+l[l.length-1] : (l[0]||"");
+  }
+
   function sync(){
     var upto=step?order.indexOf(step):0;
-    nodes.forEach(function(n,i){
-      n.classList.toggle("sel", i<=upto);
-      n.classList.toggle("off", i>upto);
-      var b=n.querySelector(".tohere");
-      if(b){
-        b.setAttribute("aria-checked", n.dataset.stage===step?"true":"false");
-        b.textContent = n.dataset.stage===step ? "Stopping here" : "Run to here";
-        b.tabIndex = n.dataset.stage===step ? 0 : -1;
-      }
-    });
-    drawFill(upto);
+    /* during and after a run the rows and the rail are paint()'s: a connection
+       change or a stray input must not rewrite them */
+    if(!running){
+      flow.classList.toggle("has-pick",!!step);
+      nodes.forEach(function(n,i){
+        n.classList.toggle("sel", i<=upto);
+        n.classList.toggle("off", !!step && i>upto);
+        var b=n.querySelector(".tohere"), st=n.querySelector(".node-state");
+        if(b){
+          b.setAttribute("aria-checked", n.dataset.stage===step?"true":"false");
+          say(b, n.dataset.stage===step ? "Stops here" : "Stop at "+labelOf[n.dataset.stage]);
+          b.tabIndex = (step ? n.dataset.stage===step : i===1) ? 0 : -1;
+        }
+        if(st)say(st, (step && i>upto) ? "Not run" : "");
+      });
+      fillTo=upto;drawFill(upto);
+    }
 
     runOpts.hidden = running || !step;
     consentOpt.hidden = step!=="interp";
     var declined = step==="interp" && consentIn.value==="declined";
-    consentNote.textContent = !declined
-      ? "Recorded consent is required for clinical positioning, and is carried "+
-        "into the provenance record either way."
-      : "This release evaluates ACMG secondary findings for every interpretation "+
-        "run, so a decline cannot be honoured here. Stop the run at the annotated "+
-        "VCF instead, or clear the selection.";
+    say(consentNote, !declined
+      ? "Needed for clinical use. Stored with the run whichever you choose."
+      : "This release always reports ACMG secondary findings, so a declined consent "+
+        "can't be respected. Stop at Annotated VCF instead, or change the consent.");
     consentNote.className = "runopt-note" + (declined ? " bad" : "");
+    if(consentAlt)consentAlt.hidden=!declined;
 
     var bad = sampleProblem();
-    sampleNote.textContent = bad ||
-      "Letters, digits, dash and underscore. Leave it empty and the name is "+
-      "taken from the FASTQ filenames, which is fine for research use but is "+
-      "not an accession.";
+    say(sampleNote, bad ||
+      "Letters, digits, - and _. Leave blank to use the FASTQ filename: "+
+      "fine for research, not a lab accession number.");
     sampleNote.className = "runopt-note" + (bad ? " bad" : "");
     sampleIn.classList.toggle("bad", !!bad);
 
-    go.disabled=!(files.length&&step)||!!bad||declined;
-    note.textContent = !files.length ? "Add your reads, then pick a stage."
-      : !step ? "Pick the stage to stop at."
-      : bad ? "Fix the sample identifier to continue."
-      : declined ? "A declined consent cannot be honoured by an interpretation run."
-      : "Runs " + labelOf[order[1]] + " through " + labelOf[step] + ".";
+    /* the stepper is the single source of truth for readiness */
+    var total=files.reduce(function(a,f){return a+f.size;},0);
+    stVal(stFiles, files.length
+      ? (files.length===1?"1 file":files.length+" files")+" · "+size(total) : "none yet", files.length>0);
+    stVal(stStop, step?labelOf[step]:"not chosen", !!step);
+    var sid=sampleIn.value.trim(), parts=[];
+    if(bad)parts.push("fix sample ID");
+    else{
+      if(sid)parts.push("sample "+sid);
+      if(step==="interp"&&consentIn.value!=="not_recorded")
+        parts.push(consentIn.value==="declined"?"consent declined":"consent given");
+    }
+    stVal(stOpts, parts.length?parts.join(" · "):"optional", !!step && !bad && !declined);
+
+    var ready=!!(files.length&&step)&&!bad&&!declined,
+        preview=connState==="preview", checking=connState==="checking";
+    go.disabled=!ready||checking;
+    say(go, preview ? "Preview the flow"
+      : (ready&&!checking) ? "Start run · to "+labelOf[step] : "Start run");
+    say(note, (!files.length&&!step) ? "Add FASTQ files and choose where to stop."
+      : (files.length&&!step) ? "Choose where to stop."
+      : !files.length ? "Add FASTQ files to run through "+labelOf[step]+"."
+      : bad ? "Fix the sample ID to continue."
+      : declined ? "Interpretation can't run while consent is declined."
+      : checking ? "Checking for a pipeline service…"
+      : preview ? "Preview only: the stages advance on a timer; nothing is uploaded and no files are produced."
+      : "Will produce "+produced()+", each downloadable when ready.");
   }
 
   sampleIn.addEventListener("input",sync);
   consentIn.addEventListener("change",sync);
 
-  function paint(reached,busy,urls){
-    var target=order.indexOf(step);
+  function paint(reached,busy,urls,failedAt){
+    var target=lastTarget;
+    /* a finished run reports its last stage as the current one: nothing is busy */
+    if(busy&&order.indexOf(busy)<=reached)busy=null;
     nodes.forEach(function(n,i){
-      var s=n.dataset.stage;
+      var s=n.dataset.stage, word="";
       n.classList.remove("done","busy","queued","off","sel");
-      if(i<=reached)n.classList.add("done");
-      else if(s===busy)n.classList.add("busy");
-      else if(i<=target)n.classList.add("queued");
-      else n.classList.add("off");
+      n.classList.toggle("target", i===target);
+      if(s===failedAt){n.classList.add("sel");word="Failed";}
+      else if(i<=reached){n.classList.add("done");word="Done";}
+      else if(s===busy){n.classList.add("busy");word="Running…";}
+      else if(i<=target){n.classList.add("queued");word="Queued";}
+      else{n.classList.add("off");word="Not in this run";}
+      var st=n.querySelector(".node-state");
+      if(st)say(st,word);
+      /* downloads are driven purely by URL */
       var a=n.querySelector(".dl");
       if(a){
         var u=urls&&urls[s];
-        a.setAttribute("aria-disabled",u?"false":"true");
-        if(u)a.setAttribute("href",u);
+        a.hidden=!u;
+        if(u){a.href=u;say(a,"Download "+labelOf[s]);}
       }
     });
-    drawFill(Math.max(0,reached));
-    sBar.style.width=Math.round(Math.max(0,reached)/target*100)+"%";
-    sStage.textContent=busy?labelOf[busy]:(reached>=target?"Complete":"\u2014");
+    fillTo=Math.max(0,reached);drawFill(fillTo);
+    sBar.style.width=Math.min(100,Math.round((Math.max(0,reached)+(busy?0.5:0))/target*100))+"%";
+    say(sStage, failedAt ? "Failed at "+(labelOf[failedAt]||failedAt)
+      : busy ? "Step "+order.indexOf(busy)+" of "+target+" · "+(verb[busy]||labelOf[busy])
+      : reached>=target ? "Complete" : "—");
   }
 
   function clock(){
     var s=Math.floor((Date.now()-t0)/1000);
     sTime.textContent=Math.floor(s/60)+":"+("0"+(s%60)).slice(-2);
   }
+  function setAgain(){say(again, previewRun?"Reset preview":live?"Cancel this run":"Start another run");}
   function begin(){
-    running=true;
-    if(retryBtn)retryBtn.hidden=true;
+    running=true;live=true;
+    retryBtn.hidden=true;retryBtn.className="restart";
     actbar.hidden=true;livebar.hidden=false;status.hidden=false;modBox.hidden=true;
-    runOpts.hidden=true;
+    runOpts.hidden=true;alertEl.hidden=true;confirmEl.hidden=true;
+    flow.classList.add("has-pick");
     nodes.forEach(function(n){
-      var b=n.querySelector(".tohere"), a=n.querySelector(".dl");
-      if(b)b.hidden=true; if(a)a.hidden=false;
+      var b=n.querySelector(".tohere");
+      if(b)b.hidden=true;
       n.classList.remove("node--pick");
     });
-    t0=Date.now();clock();timer=setInterval(clock,1000);
-    status.scrollIntoView({behavior:"smooth",block:"center"});
+    clearInterval(timer);t0=Date.now();clock();timer=setInterval(clock,1000);
+    setAgain();
+    /* the activated button went with its bar: the run's own button takes the
+       focus, without scrolling (every other state change places it too) */
+    again.focus({preventScroll:true});
   }
-  function finish(text){
+  /* kind: ok | info | err. err is also raised in #alert. live stays true only
+     when the caller says so (lost contact: the run may still be going). */
+  function finish(text,kind,keepLive){
     clearInterval(timer);clearInterval(poll);
-    liveNote.textContent=text;
+    liveNote.className="note note--"+(kind||"info");
+    say(liveNote,text);
+    if(kind==="err"){say(alertEl,text);alertEl.hidden=false;}
+    /* the "Stop the run?" prompt belongs to a live run and goes with it; a
+       focus that was on it moves to the button that now offers another run */
+    var onConfirm=!keepLive&&!confirmEl.hidden&&confirmEl.contains(document.activeElement);
+    if(!keepLive){live=false;confirmEl.hidden=true;}
+    setAgain();
+    if(onConfirm)again.focus({preventScroll:true});
+    /* Previous runs is where a finished, failed or lost run is picked up again */
+    loadRuns();
+  }
+  /* The service refused the POST: no run exists, so no row may read Queued or
+     Done, the status card has nothing to show, and #again offers another run. */
+  function notStarted(text){
+    say(sStage,"—");
+    finish(text,"err");
+    status.hidden=true;
+    nodes.forEach(function(n,i){
+      n.classList.remove("done","busy","queued","target");
+      n.classList.toggle("off",i>0);n.classList.toggle("sel",i===0);
+      var st=n.querySelector(".node-state");
+      if(st)say(st,i>0?"Not run":"");
+    });
+    fillTo=0;drawFill(0);
   }
 
   go.addEventListener("click",function(){
-    if(!files.length||!step)return;
+    if(!files.length||!step||connState==="checking")return;
     var target=order.indexOf(step);
-    lastTarget=target;
+    lastTarget=target;lastReached=0;lastUrls=null;
 
     if(!PIPELINE_ENDPOINT){
-      badge.hidden=false;
+      previewRun=true;statusBadge.hidden=false;
       begin();
-      liveNote.textContent="No pipeline is connected, so this is a preview of the "+
-        "flow. Nothing was uploaded and no files are produced.";
+      liveNote.className="note note--info";
+      say(liveNote,"Preview run. Nothing was uploaded and no files are produced.");
       var at=0;
       paint(0,order[1],null);
       poll=setInterval(function(){
         at++;
         if(at>target){
           paint(target,null,null);
-          finish("Preview finished. Connect a pipeline endpoint to run for real.");
+          finish("Preview finished. Connect a pipeline service to run for real.","info");
           return;
         }
         paint(at-1,order[at],null);
@@ -697,18 +1006,37 @@
       fd.append("secondary_findings",consentIn.value);
       selectedModules().forEach(function(id){fd.append("modules",id);});
     }
+    previewRun=false;statusBadge.hidden=true;
     begin();
-    liveNote.textContent="Uploading your reads \u2026";
+    paint(0,null,null);
+    say(sStage,"Uploading");
+    liveNote.className="note note--info";
+    say(liveNote,"Uploading your reads…");
+    /* A cancel during the upload resets the page at once; the upload is left to
+       finish so that the run it creates can be cancelled by id, and its answer
+       never reaches the reset page. */
+    var my=++runSeq;
     fetch(PIPELINE_ENDPOINT,{method:"POST",body:fd})
       .then(function(r){return r.ok?r.json():refusal(r);})
       .then(function(d){
+        if(my!==runSeq){
+          if(PIPELINE_ENDPOINT&&d&&d.id)
+            fetch(PIPELINE_ENDPOINT+"/"+d.id+"/cancel",{method:"POST"})
+              .then(loadRuns,function(){});
+          return;
+        }
         runId=d.id;
-        liveNote.textContent = d.queue_position>1
+        say(sStage,"Queued");
+        liveNote.className="note";
+        say(liveNote, d.queue_position>1
           ? "Run "+d.id+" is number "+d.queue_position+" in the queue."
-          : "Run "+d.id+" is starting.";
+          : "Run "+d.id+" is starting.");
         track(d.id,target);
       })
-      .catch(function(e){finish("The run was not started. "+String(e));});
+      .catch(function(e){
+        if(my!==runSeq)return;
+        notStarted("The run was not started. "+msg(e));
+      });
   });
 
   /* Poll one run and drive the stage graph. Started by "go", and again by
@@ -716,49 +1044,75 @@
      everything already finished, so a retry costs minutes, not the hours
      the completed stages took. */
   function track(id,target){
+    clearInterval(poll);
+    var my=runSeq;
     poll=setInterval(function(){
           fetch(PIPELINE_ENDPOINT+"/"+id)
             .then(function(r){return r.json();})
             .then(function(j){
+              /* an answer that lands after the operator left this run is dropped */
+              if(my!==runSeq||runId!==id)return;
               var urls={},done=j.done||[];
               done.forEach(function(x){urls[x.key]=x.url;});
               var reached=done.length?order.indexOf(done[done.length-1].key):0;
-              paint(reached,j.stage,urls);
-              /* the service names the step it is on; show it as it goes */
-              if(j.message)liveNote.textContent=j.message;
+              lastReached=reached;lastUrls=urls;
+              var queued=j.state==="queued";
+              /* a queued run has nothing busy yet: its rows read Queued, not Running */
+              paint(reached, (j.failed||queued)?null:j.stage, urls, j.failed?j.stage:null);
               if(j.failed){
-                finish("The run failed at "+
-                  (labelOf[j.stage]||j.stage)+". "+(j.error||""));
-                retryBtn.hidden=false;
+                var at=labelOf[j.stage]||j.stage;
+                finish("The run failed at "+at+". "+(j.error?j.error+" ":"")+
+                  "Retry resumes from "+at+"; finished stages are kept.","err");
+                retryBtn.hidden=false;retryBtn.className="run";
               }
-              else if(j.state==="cancelled")finish("The run was cancelled.");
+              else if(j.state==="cancelled"){
+                say(sStage,"Cancelled");
+                finish("The run was cancelled. Finished stages are kept.","info");
+              }
               else if(reached>=target){
                 // Interpretation reports may be held for review, in which
                 // case they exist but are not downloadable yet.
                 var rel=(j.interpretation&&j.interpretation.release&&j.interpretation.release.state)||"auto";
-                if(rel==="pending")finish("The reports are ready and awaiting clinical review.");
-                else if(rel==="withheld")finish("A reviewer withheld the interpretation reports.");
-                else finish("Every stage is ready to download.");
+                if(rel==="pending")finish("The reports are ready and awaiting clinical review. Downloads appear here once released.","ok");
+                else if(rel==="withheld")finish("A reviewer withheld the interpretation reports. The earlier stages are still downloadable.","info");
+                else finish("Every stage is ready to download.","ok");
+              }
+              else if(queued){
+                /* still waiting: paint() wrote "—"; the queue sentence written
+                   after the POST stands unless the service says more */
+                say(sStage,"Queued");
+                if(j.message){liveNote.className="note";say(liveNote,j.message);}
+              }
+              else{
+                /* the service names the step it is on; show it as it goes */
+                liveNote.className="note";
+                say(liveNote, j.message||"Your reads are moving through the pipeline.");
               }
             })
-            .catch(function(e){finish("Lost contact with the pipeline ("+e+").");});
+            .catch(function(e){
+              if(my!==runSeq||runId!==id)return;
+              finish("Lost contact with the pipeline ("+msg(e)+"). It may still be running; "+
+                "refresh Previous runs to watch it.","err",true);
+            });
     },4000);
   }
-
-  var prevruns=document.getElementById("prevruns"),
-      runlist=document.getElementById("runlist"),
-      runlistRefresh=document.getElementById("runlist-refresh");
 
   /* Take over an existing run: same status area, same poller, whether it
      was started this page-load or found in the list below. */
   function adopt(id,target){
     clearInterval(timer);clearInterval(poll);
-    runId=id;lastTarget=target;
+    runId=id;lastTarget=target;lastReached=0;lastUrls=null;
+    previewRun=false;statusBadge.hidden=true;
+    var fastq=document.getElementById("run-fastq");
+    if(fastq&&fastq.hidden)location.hash="#pipeline";   /* the status card lives on the FASTQ route */
     begin();
-    liveNote.textContent="Watching run "+id+" \u2026";
+    paint(0,null,null);
+    liveNote.className="note";
+    say(liveNote,"Watching run "+id+"…");
     track(id,target);
   }
 
+  var STATE={running:"Running",queued:"Queued",failed:"Failed",completed:"Completed",cancelled:"Cancelled"};
   function loadRuns(){
     if(!PIPELINE_ENDPOINT)return;
     fetch(PIPELINE_ENDPOINT)
@@ -769,13 +1123,12 @@
         runlist.textContent="";
         runs.slice(0,8).forEach(function(r){
           var row=document.createElement("div");
-          row.style.cssText="display:flex;gap:12px;align-items:center;"+
-            "flex-wrap:wrap;padding:7px 0;border-top:1px solid rgba(128,128,128,.25)";
+          row.className="runrow";
           var label=document.createElement("span");
           var when="";
-          try{when=" \u00b7 "+new Date(r.created_at*1000).toLocaleString();}catch(e){}
-          label.textContent=r.sample+" \u00b7 "+r.id+" \u00b7 "+r.state+
-            (r.state==="running"?" ("+Math.round((r.progress||0)*100)+"%)":"")+when;
+          try{when=" · "+new Date(r.created_at*1000).toLocaleString();}catch(e){}
+          label.textContent=(r.sample||"—")+" · "+r.id+" · "+(STATE[r.state]||r.state)+
+            (r.state==="running"?" ("+Math.round((r.progress||0)*100)+" %)":"")+when;
           row.appendChild(label);
           if(r.state==="failed"){
             var b=document.createElement("button");
@@ -788,7 +1141,7 @@
                 .then(function(){adopt(r.id,order.indexOf(r.target));})
                 .catch(function(e){
                   b.disabled=false;
-                  label.textContent+=" \u2014 retry refused: "+String(e);
+                  label.textContent+=" — retry refused: "+msg(e);
                 });
             });
             row.appendChild(b);
@@ -808,77 +1161,141 @@
   }
   if(runlistRefresh)runlistRefresh.addEventListener("click",loadRuns);
 
-  var retryBtn=document.getElementById("retrybtn");
   retryBtn.addEventListener("click",function(){
     if(!runId||!PIPELINE_ENDPOINT)return;
-    retryBtn.hidden=true;
-    liveNote.textContent="Retrying from the failed step \u2026";
-    fetch(PIPELINE_ENDPOINT+"/"+runId+"/retry",{method:"POST"})
+    retryBtn.hidden=true;alertEl.hidden=true;
+    again.focus({preventScroll:true});   /* the activated button just went away */
+    liveNote.className="note";
+    say(liveNote,"Retrying from the failed step…");
+    var my=runSeq, id=runId;
+    fetch(PIPELINE_ENDPOINT+"/"+id+"/retry",{method:"POST"})
       .then(function(r){return r.ok?r.json():refusal(r);})
       .then(function(){
+        /* the operator moved on meanwhile: the retried run shows in the list instead */
+        if(my!==runSeq){loadRuns();return;}
         clearInterval(timer);clearInterval(poll);
+        live=true;retryBtn.className="restart";setAgain();
+        paint(lastReached,order[lastReached+1],lastUrls);
         t0=Date.now();clock();timer=setInterval(clock,1000);
-        track(runId,lastTarget);
+        track(id,lastTarget);
       })
       .catch(function(e){
+        if(my!==runSeq)return;
         retryBtn.hidden=false;
-        finish("The retry was not started. "+String(e));
+        finish("The retry was not started. "+msg(e),"err");
       });
   });
 
-  again.addEventListener("click",function(){
+  /* Cancel / reset. While a run is live the first click asks; only "Cancel run"
+     stops it. A finished or preview run resets straight away. Never scrolls. */
+  function reset(){
     clearInterval(timer);clearInterval(poll);
-    retryBtn.hidden=true;
+    retryBtn.hidden=true;retryBtn.className="restart";
     /* do not leave a run occupying the machine after the page moves on */
-    if(runId&&PIPELINE_ENDPOINT)
+    if(live&&runId&&PIPELINE_ENDPOINT)
       fetch(PIPELINE_ENDPOINT+"/"+runId+"/cancel",{method:"POST"})
         .catch(function(){});
+    /* an upload or retry still in flight now answers a run the page has left */
+    runSeq++;
     runId=null;
-    running=false;files=[];step=null;input.value="";
+    running=false;live=false;previewRun=false;files=[];step=null;input.value="";
     sampleIn.value="";consentIn.value="not_recorded";
-    fname.hidden=true;fmeta.hidden=true;
-    nodes.forEach(function(n,i){
-      var b=n.querySelector(".tohere"), a=n.querySelector(".dl");
+    fname.textContent="";fname.className="drop-name";
+    fmeta.hidden=true;fmeta.textContent="";
+    fcount.hidden=true;fcount.textContent="";
+    say(dropHint,DEFAULT_HINT);
+    nodes.forEach(function(n){
+      var b=n.querySelector(".tohere"), a=n.querySelector(".dl"), st=n.querySelector(".node-state");
       if(b){b.hidden=false;n.classList.add("node--pick");}
-      if(a){a.hidden=true;a.setAttribute("aria-disabled","true");a.setAttribute("href","#");}
-      n.classList.remove("done","busy","queued");
+      if(a){a.hidden=true;a.removeAttribute("href");}
+      if(st)st.textContent="";
+      n.classList.remove("done","busy","queued","target");
     });
-    actbar.hidden=false;livebar.hidden=true;status.hidden=true;badge.hidden=true;
+    actbar.hidden=false;livebar.hidden=true;status.hidden=true;statusBadge.hidden=true;
+    alertEl.hidden=true;alertEl.textContent="";confirmEl.hidden=true;
     showModules();
-    liveNote.textContent="Your reads are moving through the pipeline.";
-    sBar.style.width="0";sTime.textContent="0:00";sStage.textContent="\u2014";
+    liveNote.className="note";
+    say(liveNote,"Your reads are moving through the pipeline.");
+    sBar.style.width="0";sTime.textContent="0:00";say(sStage,"—");
     loadRuns();
     sync();
-    document.getElementById("pipeline").scrollIntoView({behavior:"smooth"});
+    /* the activated button went with its bar: step 1 takes the focus, without scrolling */
+    input.focus({preventScroll:true});
+  }
+  again.addEventListener("click",function(){
+    if(previewRun||!live){reset();return;}
+    confirmEl.hidden=false;
+    confirmYes.focus();
+  });
+  confirmYes.addEventListener("click",function(){confirmEl.hidden=true;reset();});
+  confirmNo.addEventListener("click",function(){confirmEl.hidden=true;again.focus();});
+
+  /* ── route B: interpret a VCF ─────────────────────────────── */
+  var irunId=null, ihead="", ipoll=null, irunning=false;
+  function pick(id){var n=document.getElementById(id);
+    return n&&n.files&&n.files[0]||null;}
+
+  /* #igo is enabled only here. keepNote: recompute the button, leave the note. */
+  function isync(keepNote){
+    if(irunning){igo.disabled=true;return;}
+    var avcf=pick("iavcf"), nvcf=pick("invcf"), bam=pick("ibam"), filt=pick("ifiltered"), t, ok=false;
+    if(connState==="checking")t="Checking for a pipeline service…";
+    else if(connState==="preview")t="Preview mode: interpretation needs a connected pipeline service.";
+    else if(!avcf)t="Choose the annotated VCF to continue.";
+    else if(!nvcf)t="Choose the normalised PASS VCF to continue.";
+    else if(bam&&!filt)t="Upload the filtered VCF with the BAM, or remove the BAM.";
+    else{
+      ok=true;
+      t = connState==="silent"
+        ? "A pipeline is set at "+connHost+" but did not answer; the run will be attempted anyway."
+        : "Ready. Files upload to the pipeline when you start.";
+    }
+    igo.disabled=!ok;
+    if(!keepNote){inote.className="note";say(inote,t);}
+  }
+  interp.addEventListener("change",function(e){
+    var i=e.target;
+    if(i&&i.type==="file"){
+      var nm=i.parentNode&&i.parentNode.querySelector(".file-name");
+      if(nm)say(nm, i.files&&i.files[0] ? i.files[0].name : "No file chosen");
+    }
+    isync();
   });
 
-  var igo=document.getElementById("igo"), inote=document.getElementById("inote"),
-      iretry=document.getElementById("iretry"), irunId=null, ihead="", ipoll=null;
-
   function itrack(id){
+    clearInterval(ipoll);
     ipoll=setInterval(function(){
       fetch(PIPELINE_ENDPOINT+"/"+id)
         .then(function(r){return r.json();})
         .then(function(j){
           if(j.failed){
-            clearInterval(ipoll);igo.disabled=false;
-            inote.textContent="The run failed. "+(j.error||"");
-            iretry.hidden=false;
+            clearInterval(ipoll);irunning=false;
+            inote.className="note note--err";
+            say(inote,"The run failed. "+(j.error?j.error+" ":"")+"Retry resumes from the failed step.");
+            iretry.hidden=false;isync(true);
+            loadRuns();   /* Previous runs is where a finished or failed run is picked up again */
           }else if(j.state==="cancelled"){
-            clearInterval(ipoll);igo.disabled=false;
-            inote.textContent="The run was cancelled.";
+            clearInterval(ipoll);irunning=false;
+            inote.className="note";
+            say(inote,"The run was cancelled.");isync(true);
+            loadRuns();
           }else if(j.state==="completed"){
-            clearInterval(ipoll);igo.disabled=false;
+            clearInterval(ipoll);irunning=false;
+            inote.className="note";
             var bundle=(j.done||[]).filter(function(x){return x.key==="interp";})[0];
             if(bundle){
-              inote.innerHTML='Interpretation finished. <a href="'+bundle.url+
-                '">Download the report bundle</a>.';
+              inote.textContent="Interpretation finished. ";
+              var a=document.createElement("a");
+              a.className="link";a.href=bundle.url;a.textContent="Download the report bundle";
+              inote.appendChild(a);
             }else{
-              inote.textContent="Interpretation finished; the reports are "+
-                "held for review.";
+              say(inote,"Interpretation finished; the reports are held for review.");
             }
+            isync(true);
+            loadRuns();
           }else if(j.message){
-            inote.textContent=ihead+" "+j.message;
+            inote.className="note";
+            say(inote,ihead+" "+j.message);
           }
         })
         .catch(function(){});
@@ -888,27 +1305,32 @@
   if(iretry)iretry.addEventListener("click",function(){
     if(!irunId||!PIPELINE_ENDPOINT)return;
     iretry.hidden=true;
-    igo.disabled=true;
-    inote.textContent="Retrying from the failed step \u2026";
+    irunning=true;igo.disabled=true;
+    inote.className="note";
+    say(inote,"Retrying from the failed step…");
     fetch(PIPELINE_ENDPOINT+"/"+irunId+"/retry",{method:"POST"})
       .then(function(r){return r.ok?r.json():refusal(r);})
       .then(function(){itrack(irunId);})
       .catch(function(e){
-        iretry.hidden=false;igo.disabled=false;
-        inote.textContent="The retry was not started. "+String(e);
+        irunning=false;iretry.hidden=false;
+        inote.className="note note--err";
+        say(inote,"The retry was not started. "+msg(e));
+        isync(true);
+        loadRuns();
       });
   });
 
   if(igo)igo.addEventListener("click",function(){
+    if(irunning)return;
     if(!PIPELINE_ENDPOINT){
-      inote.textContent="No pipeline is connected, so nothing can be interpreted.";
+      inote.className="note";
+      say(inote,"Preview mode: interpretation needs a connected pipeline service.");
       return;
     }
-    function pick(id){var n=document.getElementById(id);
-      return n&&n.files&&n.files[0]||null;}
     var avcf=pick("iavcf"), nvcf=pick("invcf");
     if(!avcf||!nvcf){
-      inote.textContent="Both the annotated VCF and the normalised PASS VCF are needed.";
+      inote.className="note";
+      say(inote,"Upload both the annotated VCF and the normalised PASS VCF.");
       return;
     }
     var fd=new FormData();
@@ -923,8 +1345,9 @@
     if(s)fd.append("sample",s);
     fd.append("modules",document.getElementById("imodules").value);
     fd.append("secondary_findings",document.getElementById("iconsent").value);
-    igo.disabled=true;
-    inote.textContent="Uploading your variant files \u2026";
+    irunning=true;igo.disabled=true;iretry.hidden=true;
+    inote.className="note note--info";
+    say(inote,"Uploading your variant files…");
     fetch(PIPELINE_ENDPOINT+"/interpret",{method:"POST",body:fd})
       .then(function(r){return r.ok?r.json():refusal(r);})
       .then(function(d){
@@ -933,22 +1356,48 @@
         iretry.hidden=true;
         ihead="Run "+d.id+" is queued.";
         if(names.length)
-          ihead+=" Dropped from these uploads: "+names.join(", ")+
-            " \u2014 e.g. "+names[0]+": "+dropped[names[0]];
-        inote.textContent=ihead;
+          ihead+=" Not produced from these uploads: "+names.join(", ")+
+            ". "+names[0]+": "+dropped[names[0]];
+        inote.className="note";
+        say(inote,ihead);
         itrack(d.id);
       })
       .catch(function(e){
-        igo.disabled=false;
-        inote.textContent="The run was not started. "+String(e);
+        irunning=false;
+        inote.className="note note--err";
+        say(inote,"The run was not started. "+msg(e));
+        isync(true);
+        loadRuns();
       });
   });
 
-  addEventListener("resize",function(){
-    drawFill(step?order.indexOf(step):0);},{passive:true});
-  sync();
+  addEventListener("resize",function(){drawFill(fillTo);},{passive:true});
+
+  /* ── first paint, then find the service ─────────────────── */
+  setConn("checking");
+  if(PIPELINE_ENDPOINT){
+    /* An endpoint named in ?api=, storage or the meta tag is known before any probe. */
+    connHost=hostOf(PIPELINE_ENDPOINT);
+    fetch(PIPELINE_ENDPOINT.replace(/\/runs\/?$/,"/health"))
+      .then(function(r){return r.ok?r.json().catch(function(){return {};}):null;})
+      .then(function(j){setConn(j?"connected":"silent",connHost);})
+      .catch(function(){setConn("silent",connHost);});
+    setTimeout(function(){loadModules();loadRuns();},0);
+  }else if(/^https?:$/.test(location.protocol)){
+    /* Served by the pipeline service? Then it is on this origin already. */
+    fetch(new URL("api/health",location.href).href)
+      .then(function(r){return r.ok?r.json():null;})
+      .then(function(j){
+        if(j&&j.status==="ok"){
+          PIPELINE_ENDPOINT=new URL("api/runs",location.href).href;
+          setConn("connected",location.hostname);
+          loadModules();
+          loadRuns();
+        }else setConn("preview");
+      })
+      .catch(function(){setConn("preview");});
+  }else setConn("preview");
 })();
 </script>
-
 </body>
 </html>
