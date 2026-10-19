@@ -1,6 +1,6 @@
 /* Flopexa — shared page behaviour (loaded on every page after field.js, before the page's own script).
    0. motion flags  1. field mount + freeze/thaw  2. .rise reveal  3. pinned-stage morph
-   4. subnav scroll-spy  5. nav menu sheet  6. data-contact wiring */
+   4. nav menu sheet  5. data-contact wiring */
 (function(){
   /* 0. flags */
   var still=false;
@@ -40,19 +40,7 @@
     document.querySelectorAll(".panel[data-shape]").forEach(function(n){po.observe(n);});
   }
 
-  /* 4. subnav spy (ignores the breadcrumb, skips hidden targets) */
-  var sn=document.querySelector(".subnav");
-  if(sn){
-    var links=[].slice.call(sn.querySelectorAll('nav a[href^="#"]'));
-    var secs=links.map(function(a){return document.querySelector(a.getAttribute("href"));});
-    var spy=new IntersectionObserver(function(es){es.forEach(function(e){
-      if(!e.isIntersecting||e.target.hidden)return;var i=secs.indexOf(e.target);if(i<0)return;
-      links.forEach(function(a,j){a.classList.toggle("on",j===i);});
-    });},{rootMargin:"-42% 0px -52% 0px"});
-    secs.forEach(function(s){if(s)spy.observe(s);});
-  }
-
-  /* 5. nav menu */
+  /* 4. nav menu */
   var nav=document.querySelector(".nav"),btn=document.querySelector(".nav-menu"),menu=document.getElementById("site-nav");
   if(nav&&btn&&menu){
     var mq=matchMedia("(max-width:1023px)");
@@ -75,7 +63,7 @@
     (mq.addEventListener?mq.addEventListener("change",function(){set(false);}):mq.addListener(function(){set(false);}));
   }
 
-  /* 6. contact (authored hidden; shown only with an address) */
+  /* 5. contact (authored hidden; shown only with an address) */
   var CONTACT=document.documentElement.getAttribute("data-contact")||"";
   if(CONTACT){
     document.querySelectorAll("a[data-contact]").forEach(function(a){

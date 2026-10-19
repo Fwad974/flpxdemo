@@ -29,7 +29,6 @@
   --warn-bg:#FFF1C9;--warn-ink:#6B5200;  /* 6.6:1 */
   --bad-bg:#FBE4E1;--bad-ink:#8A2A1E;    /* 7.1:1 */
   --s-pad:clamp(56px,7vw,96px);
-  --subnav-h:46px;
 }
 
 *{box-sizing:border-box}
@@ -90,27 +89,6 @@ img{max-width:100%;display:block}
 }
 @media (max-width:600px){.nav-brand-x{display:none}.nav-in{gap:10px}}
 
-/* ── in-page section nav ────────────────────────────────────── */
-.subnav{position:sticky;top:var(--nav-h);z-index:50;height:var(--subnav-h);
-  background:rgba(11,11,13,.92);
-  -webkit-backdrop-filter:saturate(180%) blur(20px);
-  backdrop-filter:saturate(180%) blur(20px);
-  border-bottom:1px solid var(--line-d)}
-.subnav-in{max-width:var(--max);margin:0 auto;padding:0 var(--pad);height:100%;
-  display:flex;align-items:center;gap:26px;overflow-x:auto;scrollbar-width:none}
-.subnav-in::-webkit-scrollbar{display:none}
-.subnav-in nav{display:flex;align-items:center;gap:26px;height:100%}
-.subnav-title{font-size:13px;font-weight:600;white-space:nowrap;margin-right:6px}
-.subnav a{font-size:13px;color:var(--on-dark-2);white-space:nowrap;position:relative;
-  height:100%;display:flex;align-items:center;transition:color .25s var(--ease)}
-.subnav a:hover,.subnav a.on{color:var(--on-dark)}
-.subnav a.on::after{content:"";position:absolute;left:0;right:0;bottom:0;height:2px;
-  border-radius:2px 2px 0 0;background:var(--tint,var(--blue))}
-.subnav-title a{display:inline-flex;align-items:center;min-height:44px;height:auto;color:var(--on-dark-2)}
-.subnav-title a:hover{color:var(--on-dark)}
-@media (max-width:860px){.subnav{position:static}}
-@media (max-width:720px){.subnav-title{display:none}.subnav-in,.subnav-in nav{gap:18px}}
-
 /* ── sections & type ────────────────────────────────────────── */
 .s{padding:var(--s-pad) var(--pad);position:relative}
 .s-dark{background:var(--black);color:var(--on-dark)}
@@ -121,8 +99,6 @@ img{max-width:100%;display:block}
 .wrap{max-width:var(--max);margin:0 auto}
 .mid{text-align:center}
 [id]{scroll-margin-top:var(--nav-h)}
-.has-subnav [id]{scroll-margin-top:calc(var(--nav-h) + var(--subnav-h))}
-@media (max-width:860px){.has-subnav [id]{scroll-margin-top:var(--nav-h)}}
 
 .eyebrow{font-size:clamp(15px,1.5vw,17px);font-weight:600;letter-spacing:-.01em;
   margin:0 0 12px;color:var(--blue)}
@@ -182,7 +158,7 @@ p{font-size:17px;line-height:1.5;margin:14px 0 0;color:var(--on-dark-2)}
   font-size:13px;color:var(--on-dark-2);background:transparent;border:1px solid var(--line-d);
   border-radius:999px;min-height:36px;padding:0 14px;cursor:pointer}
 .motion:hover,.motion[aria-pressed="true"]{color:var(--on-dark)}
-/* short desktop viewports (1280×720, 1366×768): the hero must fit under the 98px nav+subnav so the cue and the Pause motion
+/* short desktop viewports (1280×720, 1366×768): the hero must fit under the 52px nav so the cue and the Pause motion
    toggle stay on the first screen (hero ≈ 640px, controls' bottom ≈ 716px); ≤680px tall the cue is hidden instead */
 @media (min-width:861px) and (max-height:830px){
   .hero--sub .hero-field{min-height:200px}
@@ -214,13 +190,10 @@ p{font-size:17px;line-height:1.5;margin:14px 0 0;color:var(--on-dark-2)}
 .stage-sticky canvas{position:absolute;inset:0;width:100%;height:100%}
 .stage-sticky::after{content:"";position:absolute;inset:0;pointer-events:none;
   background:linear-gradient(90deg,#000 36%,transparent 58%)}
-.has-subnav .stage-sticky{top:calc(var(--nav-h) + var(--subnav-h));
-  height:calc(100svh - var(--nav-h) - var(--subnav-h))}
 .panels{position:relative;z-index:1;margin:0 auto;
   max-width:calc(var(--max) + var(--pad)*2);padding:0 var(--pad);
   margin-top:calc(-1 * (100svh - var(--nav-h)));
   min-height:calc(100svh - var(--nav-h))}
-.has-subnav .panels{margin-top:calc(-1 * (100svh - var(--nav-h) - var(--subnav-h)))}
 .panel{min-height:auto;width:52%;display:flex;flex-direction:column;
   justify-content:center;padding:clamp(72px,12vh,140px) 0}
 .panel:first-child{padding-top:clamp(96px,18vh,200px)}
@@ -456,8 +429,7 @@ a.rung:hover .rung-name{text-decoration:underline}
   .stage-sticky{top:var(--nav-h);height:30svh;z-index:2;background:var(--black);
     -webkit-mask-image:none;mask-image:none;border-bottom:1px solid var(--line-d)}
   .stage-sticky::after{inset:auto 0 0 0;height:48px;background:linear-gradient(transparent,var(--black))}
-  .has-subnav .stage-sticky{display:none}          /* product pages: the hero already showed the shape */
-  .has-subnav .panels{margin-top:0}
+  .page-module .stage-sticky{display:none}         /* module pages: the hero already showed the shape */
   .panels{z-index:1;margin-top:0;min-height:0}
   .panel{width:100%;padding:40px 0 28px}
   .panel:first-child{padding-top:40px}.panel:last-child{padding-bottom:40px}

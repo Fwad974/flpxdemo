@@ -14,7 +14,7 @@
      origin, or set it to e.g. http://localhost:8000/api/runs. -->
 <meta name="pipeline-endpoint" content="">
 </head>
-<body class="has-subnav">
+<body>
 <a class="skip" href="#main">Skip to content</a>
 <header class="nav">
   <div class="nav-in">
@@ -40,12 +40,6 @@
     <button class="nav-menu" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
   </div>
 </header>
-<div class="subnav" style="--tint:#C8A6FF">
-  <div class="subnav-in">
-    <span class="subnav-title"><a href="index.html#genomics">Genomic tests</a> › Human · WGS</span>
-    <nav aria-label="On this page"><a href="#pipeline">Run from FASTQ</a><a href="#interpret">Interpret a VCF</a></nav>
-  </div>
-</div>
 <main id="main" style="--tint:#C8A6FF;--tint-ink:#5B3FB0">
 <section class="hero hero--tool"><div class="hero-in">
   <div class="hero-copy">
@@ -340,8 +334,6 @@
     tabs.forEach(function(t,j){t.setAttribute("aria-selected",j===i?"true":"false");t.tabIndex=j===i?0:-1;});
     panels.forEach(function(p,j){p.hidden=j!==i;});
     if(help&&help.textContent!==HELP[i])help.textContent=HELP[i];
-    document.querySelectorAll(".subnav nav a").forEach(function(a){
-      a.classList.toggle("on",a.getAttribute("href")===HASH[i]);});
     /* the pipeline script measures the rail on resize; a display:none #flow measures 0 */
     if(i===0&&cur!==0)window.dispatchEvent(new Event("resize"));
     cur=i;
@@ -401,7 +393,7 @@
     if(document.readyState==="complete")done(); else addEventListener("load",function(){setTimeout(done,0);});
   }
   addEventListener("hashchange",function(){fromHash(false);});
-  /* In-page links to #interpret (hero, subnav, the "Switch to" line, nav and
+  /* In-page links to #interpret (hero, the "Switch to" line, nav and
      footer) land the same way as the tab: a plain fragment navigation would
      scroll the panel under the sticky bars, and fires nothing when the hash is
      already #interpret. Modified clicks (new tab, etc.) are left to the browser. */
