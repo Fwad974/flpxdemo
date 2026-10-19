@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <link rel="icon" href="data:,">
 <title>Therapeutics AI — Flopexa</title>
-<meta name="description" content="Genomic and pathway evidence in; ranked targets, biomarkers and candidate responder populations out.">
+<meta name="description" content="Genomic and pathway evidence in; ranked targets, biomarkers and responder groups out.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap">
@@ -15,35 +15,38 @@
 <a class="skip" href="#main">Skip to content</a>
 <header class="nav">
   <div class="nav-in">
-    <a class="nav-brand" href="index.html">Flopexa<span class="nav-brand-x"> Genomics OS</span></a>
+    <a class="nav-brand" href="index.html">Flopexa</a>
     <nav class="nav-links" id="site-nav" aria-label="Main">
-      <span class="nav-h">AI modules</span>
-      <a href="research.html">Research</a>
-      <a href="therapeutics.html" aria-current="page">Therapeutics</a>
-      <a href="stem-cell.html">Stem Cell</a>
-      <a href="veterinary.html">Veterinary</a>
-      <a href="clinical.html">Clinical</a>
-      <span class="nav-h">Platform</span>
-      <a class="sep" href="cloud.html">Cloud</a>
-      <a class="nav-more" href="index.html#substrate">How data is shared</a>
-      <span class="nav-h nav-more">Run an analysis</span>
-      <a class="nav-more" href="human-wgs.html">Human WGS pipeline</a>
-      <a class="nav-more" href="human-wgs.html#interpret">Interpret a VCF</a>
-      <a class="nav-more" href="index.html?sp=horse#genomics">Horse tests</a>
-      <a class="nav-more" href="index.html?sp=camel#genomics">Camel tests</a>
-      <a class="nav-more" href="#" data-contact data-subject="Flopexa" hidden>Contact</a>
+      <a href="platform.html">Platform</a>
+      <a class="nav-sub" href="platform.html#connect">Connect</a>
+      <a class="nav-sub" href="platform.html#integrate">Integrate</a>
+      <a class="nav-sub" href="platform.html#analyze">Analyze</a>
+      <a class="nav-sub" href="platform.html#automate">Automate</a>
+      <a class="nav-sub" href="platform.html#operate">Operate</a>
+      <a href="solutions.html" aria-current="true">Solutions</a>
+      <a class="nav-sub" href="genomics.html">Genomics &amp; Life Sciences</a>
+      <a class="nav-sub" href="solutions.html#ai-data-analytics">AI &amp; Data Analytics</a>
+      <a class="nav-sub" href="solutions.html#web-design-development">Web Design &amp; Development</a>
+      <a class="nav-sub" href="solutions.html#app-design-development">App Design &amp; Development</a>
+      <a class="nav-sub" href="human-wgs.html">Run Human WGS</a>
+      <a href="integrations.html">Integrations</a>
+      <a href="resources.html">Resources</a>
+      <a href="about.html">About</a>
+      <a class="nav-more" href="contact.html">Contact</a>
     </nav>
-    <a class="btn btn-nav" href="human-wgs.html">Run Human WGS</a>
+    <button class="nav-search" type="button" data-search aria-label="Search the site" aria-haspopup="dialog"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="8.5" cy="8.5" r="6" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M13 13l5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></button>
+    <a class="btn btn-nav" href="contact.html">Talk to us</a>
     <button class="nav-menu" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
   </div>
 </header>
 <main id="main" style="--tint:#E8B25A;--tint-ink:#7A4E00">
   <section class="hero hero--sub">
     <div class="hero-copy">
+      <nav class="crumb" aria-label="Breadcrumb"><a href="solutions.html">Solutions</a> › <a href="genomics.html">Genomics &amp; Life Sciences</a></nav>
       <p class="eyebrow" style="color:var(--tint)">For drug-discovery teams</p>
       <h1>Therapeutics AI</h1>
-      <p class="lead">Genomic and pathway evidence in; ranked targets, biomarkers and candidate responder populations out.</p>
-      <div class="cta"><a class="btn" href="human-wgs.html">Run a whole-genome sample</a><a class="link" href="#capabilities">What it does</a></div>
+      <p class="lead">Genomic and pathway evidence in; ranked targets, biomarkers and responder groups out.</p>
+      <div class="cta"><a class="btn" href="human-wgs.html">Run a whole-genome sample</a><a class="link" href="contact.html?topic=genomics&about=Therapeutics%20AI">Talk to us</a></div>
     </div>
     <div class="hero-field"><canvas data-field data-shape="molecule" data-color="#E8B25A" aria-hidden="true"></canvas></div>
     <a class="cue" href="#capabilities"><i></i>What it does</a>
@@ -57,23 +60,22 @@
         <p class="eyebrow">Therapeutics AI</p>
         <h2>What it does</h2>
         <ul class="big">
-          <li><i style="background:#E8B25A"></i><div><h3>Target identification</h3><p>Ranks candidate targets from genomic and pathway evidence, showing the evidence behind each.</p></div></li>
-          <li><i style="background:#E8B25A"></i><div><h3>Biomarker discovery</h3><p>Finds markers that separate likely responders from the rest, from the same data.</p></div></li>
-          <li><i style="background:#E8B25A"></i><div><h3>Lead optimisation</h3><p>Models activity, selectivity and off-target behaviour of candidate structures.</p></div></li>
+          <li><i style="background:#E8B25A"></i><div><h3>Target identification</h3><p>Candidate targets ranked, with the evidence behind each.</p></div></li>
+          <li><i style="background:#E8B25A"></i><div><h3>Biomarker discovery</h3><p>Markers that separate likely responders from the rest.</p></div></li>
+          <li><i style="background:#E8B25A"></i><div><h3>Lead optimisation</h3><p>Activity, selectivity and off-target behaviour, modelled.</p></div></li>
         </ul>
-        <p class="also"><strong>Also:</strong> mechanism modelling, off-target assessment, patient stratification, translational readouts.</p>
+        <p class="also"><strong>Also:</strong> mechanism modelling, patient stratification, translational readouts.</p>
       </div>
       <div class="panel" id="how" data-shape="helix" data-color="#E8B25A" data-zoom=".92" data-cx=".73">
         <p class="eyebrow">Therapeutics AI</p>
         <h2>How it works</h2>
-        <p class="lead">Four steps, one run. Nothing is re-uploaded between them and nothing leaves the platform.</p>
         <div class="steps">
-          <div class="step"><div><h3>Define the target</h3><p>Candidate targets are ranked from the genomic and pathway evidence in your data.</p></div></div>
-          <div class="step"><div><h3>Screen candidates</h3><p>Candidate structures are scored against known binding behaviour for the target.</p></div></div>
-          <div class="step"><div><h3>Model the effect</h3><p>Activity, selectivity and off-target behaviour are modelled for each candidate.</p></div></div>
-          <div class="step"><div><h3>Stratify</h3><p>Markers that separate likely responders are proposed from the same data, for the trial design to test.</p></div></div>
+          <div class="step"><div><h3>Define the target</h3><p>Targets ranked from the genomic and pathway evidence.</p></div></div>
+          <div class="step"><div><h3>Screen candidates</h3><p>Structures scored against known binding for the target.</p></div></div>
+          <div class="step"><div><h3>Model the effect</h3><p>Activity, selectivity and off-target effects, per candidate.</p></div></div>
+          <div class="step"><div><h3>Stratify</h3><p>Responder markers proposed, for the trial design to test.</p></div></div>
         </div>
-        <p class="io"><strong>You need:</strong> annotated variants: VCF files from the Human WGS pipeline, or your own, plus pathway or expression results where you have them. <strong>You get:</strong> ranked targets, candidate biomarkers and a responder-population summary, each with its sources.</p>
+        <p class="io"><strong>You need:</strong> annotated VCFs (from the Human WGS pipeline or your own), plus pathway or expression data if you have it. <strong>You get:</strong> ranked targets, candidate biomarkers and a responder summary, with sources.</p>
       </div>
     </div>
   </div></section>
@@ -81,62 +83,58 @@
   <section class="s s-light" id="scope"><div class="wrap rise">
     <h2 class="h-sm">Scope</h2>
     <div class="card card--light scope">
-      <p><strong>Built for:</strong> discovery and translational teams working from genomic and pathway evidence.</p>
-      <p><strong>Not for:</strong> patient-facing reporting; for that, see <a class="link" href="clinical.html">Clinical AI</a>.</p>
-      <p class="fine">Product copy. Not a clinical or regulatory claim.</p>
+      <p><strong>Built for:</strong> discovery and translational teams.</p>
+      <p><strong>Not for:</strong> patient-facing reports; see <a class="link" href="clinical.html">Clinical AI</a>.</p>
     </div>
   </div></section>
 
-  <section class="s s-white" id="fits"><span id="scale"></span><div class="wrap rise">
+  <section class="s s-white" id="fits"><div class="wrap rise">
     <p class="eyebrow">Where it fits</p>
-    <h2 class="h-sm">Where Therapeutics AI sits.</h2>
-    <p class="lead">Flopexa's five AI modules are arranged by the level of biology they work at, from raw data to the patient. All five read the same data layer, the Flopexa Cloud.</p>
+    <h2 class="h-sm">Five modules, from data to patient.</h2>
     <div class="ladder">
       <a class="rung" href="research.html" style="--c:#7FD0EC;--c-ink:#0E6B88"><span class="rung-dot"></span><span class="rung-name">Research AI</span><span class="rung-desc">multi-omics discovery</span><span class="rung-scale">Data</span></a>
-      <a class="rung on" href="therapeutics.html" style="--c:#E8B25A;--c-ink:#7A4E00" aria-current="page">
-        <span class="rung-dot"></span><span class="rung-name">Therapeutics AI</span><span class="rung-desc">drug discovery</span><span class="rung-scale">Molecule</span><span class="rung-here">You are here</span></a>
+      <a class="rung on" href="therapeutics.html" style="--c:#E8B25A;--c-ink:#7A4E00" aria-current="page"><span class="rung-dot"></span><span class="rung-name">Therapeutics AI</span><span class="rung-desc">drug discovery</span><span class="rung-scale">Molecule</span><span class="rung-here">You are here</span></a>
       <a class="rung" href="stem-cell.html" style="--c:#7EE0D0;--c-ink:#0F6F63"><span class="rung-dot"></span><span class="rung-name">Stem Cell AI</span><span class="rung-desc">iPSC and regenerative</span><span class="rung-scale">Cell</span></a>
       <a class="rung" href="veterinary.html" style="--c:#FF9E8A;--c-ink:#B03A24"><span class="rung-dot"></span><span class="rung-name">Veterinary AI</span><span class="rung-desc">animal genomics</span><span class="rung-scale">Organism</span></a>
       <a class="rung" href="clinical.html" style="--c:#C8A6FF;--c-ink:#5B3FB0"><span class="rung-dot"></span><span class="rung-name">Clinical AI</span><span class="rung-desc">decision support</span><span class="rung-scale">Patient</span></a>
     </div>
-    <p class="ladder-note">You are here: Therapeutics AI, at the molecule level.</p>
-    <a class="link" href="cloud.html">Runs on Flopexa Cloud</a>
+    <div class="cta"><a class="link" href="platform.html">Built on the Flopexa platform</a></div>
   </div></section>
 
-  <section class="s s-light" id="start"><div class="wrap rise">
-    <p class="eyebrow">Get started</p>
+  <section class="s s-light mid" id="start"><div class="wrap rise">
     <h2>Structure, function and effect, in one analysis.</h2>
-    <p class="lead">Therapeutics AI reads annotated variants. Produce them from a whole-genome sample, or bring your own.</p>
+    <p class="lead">It reads annotated variants. Make them from a genome, or bring your own.</p>
     <div class="cta">
       <a class="btn" href="human-wgs.html">Run a whole-genome sample</a>
-      <a class="link" href="#fits">Where it fits</a>
-      <a class="link" href="#" data-contact data-subject="Therapeutics AI" hidden>Talk to us</a>
+      <a class="link" href="contact.html?topic=genomics&about=Therapeutics%20AI">Talk to us</a>
     </div>
   </div></section>
 </main>
 <footer class="foot"><div class="foot-in">
   <div class="foot-cols">
-    <div><h4>AI modules</h4><ul>
-      <li><a href="research.html">Research AI</a></li>
-      <li><a href="therapeutics.html">Therapeutics AI</a></li>
-      <li><a href="stem-cell.html">Stem Cell AI</a></li>
-      <li><a href="veterinary.html">Veterinary AI</a></li>
-      <li><a href="clinical.html">Clinical AI</a></li></ul></div>
-    <div><h4>Run an analysis</h4><ul>
-      <li><a href="human-wgs.html">Human WGS — run online</a></li>
+    <div><h3>Platform</h3><ul>
+      <li><a href="platform.html#connect">Connect</a></li>
+      <li><a href="platform.html#integrate">Integrate</a></li>
+      <li><a href="platform.html#analyze">Analyze</a></li>
+      <li><a href="platform.html#automate">Automate</a></li>
+      <li><a href="platform.html#operate">Operate</a></li></ul></div>
+    <div><h3>Solutions</h3><ul>
+      <li><a href="genomics.html">Genomics &amp; Life Sciences</a></li>
+      <li><a href="solutions.html#ai-data-analytics">AI &amp; Data Analytics</a></li>
+      <li><a href="solutions.html#web-design-development">Web Design &amp; Development</a></li>
+      <li><a href="solutions.html#app-design-development">App Design &amp; Development</a></li></ul></div>
+    <div><h3>Genomics</h3><ul>
+      <li><a href="human-wgs.html">Run Human WGS</a></li>
       <li><a href="human-wgs.html#interpret">Interpret a VCF</a></li>
-      <li><a href="index.html?sp=human#genomics">Human tests</a></li>
-      <li><a href="index.html?sp=horse#genomics">Horse tests</a></li>
-      <li><a href="index.html?sp=camel#genomics">Camel tests</a></li></ul></div>
-    <div><h4>Platform</h4><ul>
-      <li><a href="index.html">Overview</a></li>
-      <li><a href="index.html#platform">The five AI modules</a></li>
-      <li><a href="index.html#substrate">How data is shared</a></li>
-      <li><a href="cloud.html">Flopexa Cloud</a></li></ul></div>
-    <div data-contact-col hidden><h4>Company</h4><ul>
-      <li><a href="#" data-contact data-subject="Flopexa" hidden>Contact</a></li></ul></div>
+      <li><a href="genomics.html#tests">Tests by species</a></li>
+      <li><a href="genomics.html#modules">The five AI modules</a></li></ul></div>
+    <div><h3>Company</h3><ul>
+      <li><a href="integrations.html">Integrations</a></li>
+      <li><a href="resources.html">Resources</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html">Contact</a></li></ul></div>
   </div>
-  <div class="foot-end"><span>© 2026 Flopexa</span><span>One platform. Five AI modules. One data layer.</span></div>
+  <div class="foot-end"><span>© 2026 Flopexa</span><span>Connect intelligence. Transform operations.</span></div>
   <p class="fine">Product copy. Not a clinical or regulatory claim.</p>
 </div></footer>
 <script src="assets/field.js"></script>

@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="en" data-contact="">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="icon" href="data:,">
+<title>Contact — Flopexa</title>
+<meta name="description" content="Talk to the Flopexa team about your systems, data and goals.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="assets/flopexa.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="nav">
+  <div class="nav-in">
+    <a class="nav-brand" href="index.html">Flopexa</a>
+    <nav class="nav-links" id="site-nav" aria-label="Main">
+      <a href="platform.html">Platform</a>
+      <a class="nav-sub" href="platform.html#connect">Connect</a>
+      <a class="nav-sub" href="platform.html#integrate">Integrate</a>
+      <a class="nav-sub" href="platform.html#analyze">Analyze</a>
+      <a class="nav-sub" href="platform.html#automate">Automate</a>
+      <a class="nav-sub" href="platform.html#operate">Operate</a>
+      <a href="solutions.html">Solutions</a>
+      <a class="nav-sub" href="genomics.html">Genomics &amp; Life Sciences</a>
+      <a class="nav-sub" href="solutions.html#ai-data-analytics">AI &amp; Data Analytics</a>
+      <a class="nav-sub" href="solutions.html#web-design-development">Web Design &amp; Development</a>
+      <a class="nav-sub" href="solutions.html#app-design-development">App Design &amp; Development</a>
+      <a class="nav-sub" href="human-wgs.html">Run Human WGS</a>
+      <a href="integrations.html">Integrations</a>
+      <a href="resources.html">Resources</a>
+      <a href="about.html">About</a>
+      <a class="nav-more" href="contact.html" aria-current="page">Contact</a>
+    </nav>
+    <button class="nav-search" type="button" data-search aria-label="Search the site" aria-haspopup="dialog"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="8.5" cy="8.5" r="6" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M13 13l5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></button>
+    <a class="btn btn-nav" href="contact.html" aria-current="page">Talk to us</a>
+    <button class="nav-menu" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
+  </div>
+</header>
+<main id="main" style="--tint:#C8A6FF;--tint-ink:#5B3FB0">
+  <section class="hero hero--tool"><div class="hero-in">
+    <div class="hero-copy">
+      <p class="eyebrow" style="color:var(--tint)">Contact</p>
+      <h1>Talk to our team.</h1>
+      <p class="lead">Tell us about your systems, data and goals.</p>
+      
+    </div>
+    <div class="hero-field"><canvas data-field data-shape="pulse" data-color="#C8A6FF" aria-hidden="true"></canvas></div>
+  </div>
+  <button type="button" class="motion" aria-pressed="false">Pause motion</button>
+  </section>
+
+  <section class="s s-light" id="form"><div class="wrap">
+    <div class="contact-grid">
+      <div class="card card--light">
+        <!-- Set data-endpoint to your form handler (CRM, email service or serverless function).
+             Without it the form opens an email to <html data-contact>, or, with neither, sends nothing. -->
+        <form class="cform" id="cform" data-endpoint="" novalidate>
+          <div class="fgrid">
+            <div class="runopt">
+              <label for="name">Name <span class="req">Required</span></label>
+              <input id="name" name="name" type="text" autocomplete="name" required aria-describedby="name-err">
+              <p class="runopt-note bad" id="name-err" hidden></p>
+            </div>
+            <div class="runopt">
+              <label for="email">Work email <span class="req">Required</span></label>
+              <input id="email" name="email" type="email" autocomplete="email" inputmode="email" required aria-describedby="email-err">
+              <p class="runopt-note bad" id="email-err" hidden></p>
+            </div>
+            <div class="runopt">
+              <label for="org">Organisation <span class="opt">Optional</span></label>
+              <input id="org" name="org" type="text" autocomplete="organization">
+            </div>
+            <div class="runopt">
+              <label for="topic">Topic</label>
+              <select id="topic" name="topic"><option value="">General enquiry</option><option value="platform">The platform</option><option value="genomics">Genomics &amp; Life Sciences</option><option value="ai-data-analytics">AI &amp; Data Analytics</option><option value="web-design-development">Web Design &amp; Development</option><option value="app-design-development">App Design &amp; Development</option><option value="integrations">Integrations</option></select>
+            </div>
+            <div class="runopt runopt--full">
+              <label for="message">How can we help? <span class="req">Required</span></label>
+              <textarea id="message" name="message" rows="6" required aria-describedby="message-err"></textarea>
+              <p class="runopt-note bad" id="message-err" hidden></p>
+            </div>
+          </div>
+          <div class="actbar"><button class="run" id="send" type="submit">Send message</button></div>
+          <p class="form-msg" id="form-msg" role="status" hidden></p>
+        </form>
+      </div>
+      <aside class="card card--light" aria-labelledby="try-h">
+        <h2 id="try-h">Rather try it first?</h2>
+        <ul class="aside-list">
+          <li><a class="link" href="human-wgs.html">Run Human WGS</a></li>
+          <li><a class="link" href="human-wgs.html#interpret">Interpret a VCF</a></li>
+          <li><a class="link" href="genomics.html#tests">Tests by species</a></li>
+          <li id="mail-row" hidden><a class="link" id="mail-link" href="#">Email</a></li>
+        </ul>
+      </aside>
+    </div>
+  </div></section>
+</main>
+<footer class="foot"><div class="foot-in">
+  <div class="foot-cols">
+    <div><h3>Platform</h3><ul>
+      <li><a href="platform.html#connect">Connect</a></li>
+      <li><a href="platform.html#integrate">Integrate</a></li>
+      <li><a href="platform.html#analyze">Analyze</a></li>
+      <li><a href="platform.html#automate">Automate</a></li>
+      <li><a href="platform.html#operate">Operate</a></li></ul></div>
+    <div><h3>Solutions</h3><ul>
+      <li><a href="genomics.html">Genomics &amp; Life Sciences</a></li>
+      <li><a href="solutions.html#ai-data-analytics">AI &amp; Data Analytics</a></li>
+      <li><a href="solutions.html#web-design-development">Web Design &amp; Development</a></li>
+      <li><a href="solutions.html#app-design-development">App Design &amp; Development</a></li></ul></div>
+    <div><h3>Genomics</h3><ul>
+      <li><a href="human-wgs.html">Run Human WGS</a></li>
+      <li><a href="human-wgs.html#interpret">Interpret a VCF</a></li>
+      <li><a href="genomics.html#tests">Tests by species</a></li>
+      <li><a href="genomics.html#modules">The five AI modules</a></li></ul></div>
+    <div><h3>Company</h3><ul>
+      <li><a href="integrations.html">Integrations</a></li>
+      <li><a href="resources.html">Resources</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html">Contact</a></li></ul></div>
+  </div>
+  <div class="foot-end"><span>© 2026 Flopexa</span><span>Connect intelligence. Transform operations.</span></div>
+  <p class="fine">Product copy. Not a clinical or regulatory claim.</p>
+</div></footer>
+<script src="assets/field.js"></script>
+<script src="assets/site.js"></script>
+<script>
+/* Contact form. Sends FormData to data-endpoint when one is set; otherwise, with <html data-contact>,
+   opens an email to that address; with neither, it validates and says plainly that nothing was sent. */
+(function(){
+  var f=document.getElementById('cform'),msg=document.getElementById('form-msg');
+  if(!f)return;
+  var q=new URLSearchParams(location.search),topic=q.get('topic'),about=q.get('about');
+  var sel=f.elements.topic;
+  if(topic&&[].some.call(sel.options,function(o){return o.value===topic;}))sel.value=topic;
+  if(about)f.elements.message.value='About '+about+': ';
+  var mail=document.documentElement.getAttribute('data-contact')||'';
+  if(mail){var a=document.getElementById('mail-link');a.href='mailto:'+mail;a.textContent=mail;document.getElementById('mail-row').hidden=false;}
+  var rules={name:function(v){return v?'':'Enter your name.';},
+             email:function(v){return !v?'Enter your work email.':/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)?'':'Enter an email like name@company.com.';},
+             message:function(v){return v.replace(/^About [^:]*:\s*$/,'')?'':'Tell us briefly what you need.';}};
+  function check(n){
+    var el=f.elements[n],err=rules[n](el.value.trim()),note=document.getElementById(n+'-err');
+    el.classList.toggle('bad',!!err);el.setAttribute('aria-invalid',err?'true':'false');
+    note.textContent=err;note.hidden=!err;return !err;
+  }
+  /* errors clear while typing, so fixing the last field does not shift the Send button on blur and swallow the click */
+  Object.keys(rules).forEach(function(n){var el=f.elements[n];
+    el.addEventListener('input',function(){if(el.getAttribute('aria-invalid')==='true')check(n);});
+    el.addEventListener('blur',function(){if(el.value)check(n);});});
+  function say(kind,text){msg.className='form-msg form-msg--'+kind;msg.textContent=text;msg.hidden=false;}
+  f.addEventListener('submit',function(e){
+    e.preventDefault();
+    var ok=Object.keys(rules).map(check).every(Boolean);
+    if(!ok){var bad=f.querySelector('[aria-invalid="true"]');if(bad)bad.focus();return;}
+    var ep=f.getAttribute('data-endpoint'),go=document.getElementById('send');
+    var topicText=sel.options[sel.selectedIndex].text;
+    if(ep){
+      go.disabled=true;go.textContent='Sending…';
+      fetch(ep,{method:'POST',body:new FormData(f),headers:{Accept:'application/json'}}).then(function(r){
+        if(!r.ok)throw 0;
+        f.reset();say('ok','Thanks. Your message was sent; we will reply by email.');
+      }).catch(function(){say('warn','Your message could not be sent. Please try again in a moment.');})
+        .then(function(){go.disabled=false;go.textContent='Send message';});
+    }else if(mail){
+      var body=f.elements.message.value+'\n\n'+f.elements.name.value+(f.elements.org.value?', '+f.elements.org.value:'')+'\n'+f.elements.email.value;
+      location.href='mailto:'+mail+'?subject='+encodeURIComponent('Flopexa: '+topicText)+'&body='+encodeURIComponent(body);
+      say('ok','Your email app should open with the message ready to send.');
+    }else{
+      say('warn','Sorry, this form is not connected yet, so nothing was sent.');
+    }
+  });
+})();
+</script>
+</body>
+</html>
