@@ -4,8 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <link rel="icon" href="data:,">
-<title>Contact — Flopexa</title>
-<meta name="description" content="Talk to the Flopexa team about your systems, data and goals.">
+<title>Get started — Flopexa</title>
+<meta name="description" content="Talk to the Flopexa team about your systems, data and goals, or try the Human WGS pipeline first.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap">
@@ -32,10 +32,9 @@
       <a href="integrations.html">Integrations</a>
       <a href="resources.html">Resources</a>
       <a href="about.html">About</a>
-      <a class="nav-more" href="contact.html" aria-current="page">Contact</a>
+      <a href="contact.html" aria-current="page">Contact</a>
     </nav>
     <button class="nav-search" type="button" data-search aria-label="Search the site" aria-haspopup="dialog"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="8.5" cy="8.5" r="6" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M13 13l5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></button>
-    <a class="btn-ghost btn-nav btn-nav--ghost" href="contact.html" aria-current="page">Contact us</a>
     <a class="btn btn-nav" href="contact.html" aria-current="page">Get started</a>
     <button class="nav-menu" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
   </div>
@@ -44,8 +43,8 @@
   <section class="hero hero--tool"><div class="hero-in">
     <div class="hero-copy">
       <p class="eyebrow" style="color:var(--tint)">Contact</p>
-      <h1>Talk to our team.</h1>
-      <p class="lead">Tell us about your systems, data and goals.</p>
+      <h1>Let’s get started.</h1>
+      <p class="lead">Tell us about your systems, data and goals, or try the Human WGS pipeline first.</p>
       
     </div>
     <div class="hero-field"><canvas data-field data-shape="pulse" data-color="#C8A6FF" aria-hidden="true"></canvas></div>
@@ -58,7 +57,8 @@
       <div class="card card--light">
         <!-- Set data-endpoint to your form handler (CRM, email service or serverless function).
              Without it the form opens an email to <html data-contact>, or, with neither, sends nothing. -->
-        <form class="cform" id="cform" data-endpoint="" novalidate>
+        <h2 class="h-sm" id="form-h">Talk to us</h2>
+        <form class="cform" id="cform" data-endpoint="" novalidate aria-labelledby="form-h">
           <div class="fgrid">
             <div class="runopt">
               <label for="name">Name <span class="req">Required</span></label>
@@ -89,7 +89,8 @@
         </form>
       </div>
       <aside class="card card--light" aria-labelledby="try-h">
-        <h2 id="try-h">Rather try it first?</h2>
+        <h2 class="h-sm" id="try-h">Try it first</h2>
+        <p>The Human WGS pipeline runs on this site. No account needed to see the flow.</p>
         <ul class="aside-list">
           <li><a class="link" href="human-wgs.html">Run Human WGS</a></li>
           <li><a class="link" href="human-wgs.html#interpret">Interpret a VCF</a></li>
