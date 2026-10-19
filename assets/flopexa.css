@@ -87,7 +87,6 @@ img{max-width:100%;display:block}
   body.nav-open{overflow:hidden}
 }
 @media (max-width:600px){.nav-in{gap:10px}}
-@media (max-width:359px){.btn-nav{display:none}}   /* 320px phones: Contact stays in the menu sheet */
 
 /* ── sections & type ────────────────────────────────────────── */
 .s{padding:var(--s-pad) var(--pad);position:relative}
@@ -666,6 +665,9 @@ fieldset.runopts,.fields{border:0;padding:0;min-width:0;margin:clamp(24px,4vw,36
   margin:0 -10px 0 -6px;transition:color .25s var(--ease)}
 .nav-search:hover{color:var(--on-dark)}
 .nav-search svg{width:17px;height:17px}
+.btn-nav--ghost{font-size:13px;min-height:32px;padding:0 14px;margin:0 -12px 0 0}   /* header "Contact us", 10px from "Get started" */
+.btn-nav--ghost::after{content:none}
+@media (max-width:600px){.btn-nav--ghost{display:none}}   /* phones: Contact is in the menu sheet */
 .crumb{font-size:13px;color:var(--on-dark-2);margin:0 0 14px}
 .crumb a{padding:12px 0}                               /* inline padding: 44px hit area, no taller line */
 .crumb a:hover{color:var(--on-dark);text-decoration:underline}

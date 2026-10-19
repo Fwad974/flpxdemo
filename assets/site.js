@@ -67,9 +67,9 @@
   var PAGES=[
     ["index.html","Home","Connect intelligence. Transform operations.",""],
     ["platform.html","Platform","Five capabilities on one AI platform.","capabilities overview"],
-    ["platform.html#connect","Connect","One governed data layer for data, apps and teams.","unified data sso roles sync workspaces cloud storage"],
-    ["platform.html#integrate","Integrate","Connect LIMS, imaging, ERP and your own apps.","connectors api webhooks hl7 fhir dicom"],
-    ["platform.html#analyze","Analyze","AI for genomic, imaging and operational data.","analytics dashboards kpi explainable genomics images"],
+    ["platform.html#connect","Connect","One governed data layer for data, apps and teams.","unified data sso roles sync workspaces"],
+    ["platform.html#integrate","Integrate","Connect your LIMS and your own apps.","lims connector api webhooks rest"],
+    ["platform.html#analyze","Analyze","AI for genomic and operational data.","analytics dashboards kpi explainable genomics reproducible"],
     ["platform.html#automate","Automate","Workflows that run themselves, with people in control.","workflow builder triggers approvals human in the loop"],
     ["platform.html#operate","Operate","Secure, compliant and ready to scale.","security encryption audit compliance monitoring deployment on-premise residency"],
     ["solutions.html","Solutions","Four ways we put the platform to work.","industries sectors"],
@@ -87,10 +87,10 @@
     ["stem-cell.html","Stem Cell AI","Single-cell data in; cell types and lineages out.","module ipsc regenerative"],
     ["veterinary.html","Veterinary AI","Whole-genome tests for horses and camels.","module vet animal breeders"],
     ["clinical.html","Clinical AI","A reviewable variant report with sources.","module clinical genetics therapy"],
-    ["integrations.html","Integrations","Connect everything you already use.","lims imaging enterprise databases cloud storage custom apps api"],
+    ["integrations.html","Integrations","Connect your LIMS and your own apps.","lims custom applications api webhooks"],
     ["resources.html","Resources","Customer stories and guides.","case studies stories guides"],
     ["about.html","About","We connect intelligence to real operations.","company values"],
-    ["contact.html","Contact","Talk to our team.","email get started demo"]];
+    ["contact.html","Contact / Get started","Talk to our team.","email get started demo contact us"]];
   var sb=document.querySelectorAll("[data-search]");
   if(sb.length&&window.HTMLDialogElement){
     var I='<svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="8.5" cy="8.5" r="6" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M13 13l5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>';
