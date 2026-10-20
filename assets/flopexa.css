@@ -62,26 +62,37 @@ img{max-width:100%;display:block}
 .nav-brand{font-size:19px;font-weight:600;letter-spacing:-.02em;white-space:nowrap;
   display:inline-block;line-height:44px}
 .nav-links{margin-left:auto;display:flex;gap:22px;align-items:center}
+.nav-group{display:contents}
+.nav-links .nav-subs,.nav-links .nav-try{display:none}   /* phone sheet only; out-ranks .nav-links a */
 .nav-links a{font-size:13px;color:var(--on-dark-2);white-space:nowrap;
   min-height:44px;display:inline-flex;align-items:center;padding:0 2px;
   transition:color .25s var(--ease)}
 .nav-links a:hover,.nav-links a[aria-current]{color:var(--on-dark)}
-.nav-links .nav-sub{display:none}   /* scoped: must out-rank .nav-links a */
 .nav-menu{display:none;appearance:none;border:1px solid var(--line-d);background:transparent;
   color:var(--on-dark);font:inherit;font-size:14px;min-width:44px;height:36px;
   padding:0 12px;border-radius:999px;cursor:pointer}
 @media (max-width:1023px){
   .nav-menu{display:inline-flex;align-items:center}
+  /* the phone sheet: six section rows that fit one screen, sub-pages as chips, one "try it" row */
   .nav-links{display:none;position:absolute;left:0;right:0;top:var(--nav-h);
-    flex-direction:column;align-items:stretch;gap:0;margin:0;padding:8px var(--pad) 18px;
-    background:var(--black);border-bottom:1px solid var(--line-d);
-    max-height:calc(100svh - var(--nav-h));overflow-y:auto}
+    flex-direction:column;align-items:stretch;gap:0;margin:0;padding:0 var(--pad) 28px;
+    background:var(--black);height:calc(100svh - var(--nav-h));overflow-y:auto}
   .nav.open .nav-links{display:flex}
-  .nav-links a{min-height:48px;font-size:17px;color:var(--on-dark);
-    border-top:1px solid var(--line-d);padding:0}
-  .nav-links .nav-sub{display:flex;min-height:44px;font-size:15px;color:var(--on-dark-2);
-    border-top:0;padding-left:16px}
-  .nav-links a[aria-current]{font-weight:600;color:var(--on-dark)}
+  .nav-group{display:block;border-top:1px solid var(--line-d);padding:2px 0}
+  .nav-group:first-child{border-top:0}
+  .nav-group>a{min-height:54px;font-size:20px;font-weight:600;color:var(--on-dark);
+    display:flex;align-items:center;justify-content:space-between;padding:0}
+  .nav-group>a::after{content:"\203A";font-size:22px;font-weight:400;color:var(--on-dark-2)}
+  .nav-group>a[aria-current="true"]::after{content:"\203A";color:var(--blue)}
+  .nav-links .nav-subs{display:flex;flex-wrap:wrap;gap:8px;padding:0 0 14px}
+  .nav-links .nav-sub{display:inline-flex;align-items:center;min-height:40px;padding:0 14px;
+    border-radius:999px;background:rgba(245,245,247,.10);color:var(--on-dark);font-size:14px;font-weight:500}
+  .nav-links .nav-sub[aria-current="page"]{background:rgba(245,245,247,.22)}
+  .nav-links .nav-try{display:flex;align-items:center;gap:10px;min-height:52px;margin-top:16px;padding:0 18px;
+    border-radius:999px;background:rgba(245,245,247,.08);box-shadow:inset 0 0 0 1px var(--line-d);
+    color:var(--on-dark);font-size:16px;font-weight:600}
+  .nav-try small{margin-left:auto;font-size:13px;font-weight:400;color:var(--on-dark-2);white-space:nowrap}
+  .nav-try .dot-live{flex:none}
   .nav-search{margin-left:auto}
   body.nav-open{overflow:hidden}
 }

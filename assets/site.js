@@ -45,7 +45,7 @@
   if(nav&&btn&&menu){
     var mq=matchMedia("(max-width:1023px)");
     function set(open){
-      nav.classList.toggle("open",open);btn.setAttribute("aria-expanded",open);
+      nav.classList.toggle("open",open);btn.setAttribute("aria-expanded",open);btn.textContent=open?"Close":"Menu";
       document.body.classList.toggle("nav-open",open);
       if(!open&&document.activeElement&&menu.contains(document.activeElement))btn.focus();
       /* the sheet precedes the button in DOM order, so on open move focus to its first row; Tab then walks the sheet */
