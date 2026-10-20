@@ -68,6 +68,7 @@
     <div class="stage-sticky"><canvas data-field data-shape="lattice" data-color="#A7DCF2" data-zoom=".8" data-cx=".76" aria-hidden="true"></canvas></div>
     <div class="panels">
       <div class="panel" id="connect" style="--tint:#A7DCF2" data-shape="lattice" data-color="#A7DCF2" data-zoom=".8" data-cx=".76">
+        <div class="panel-field"><canvas data-field data-shape="lattice" data-color="#A7DCF2" aria-hidden="true"></canvas></div>
         <p class="eyebrow">01 · Connect</p>
         <h2>One connected foundation for all your data.</h2>
         <p class="lead">Data, apps and teams in one secure, governed layer.</p>
@@ -77,6 +78,7 @@
         <p class="also"><strong>Used for:</strong> linking lab and clinical records; sharing governed datasets with partners.</p>
       </div>
       <div class="panel" id="integrate" style="--tint:#7EE0D0" data-shape="cell" data-color="#7EE0D0" data-zoom=".8" data-cx=".76">
+        <div class="panel-field"><canvas data-field data-shape="cell" data-color="#7EE0D0" aria-hidden="true"></canvas></div>
         <p class="eyebrow">02 · Integrate</p>
         <h2>Integrate your LIMS and your own apps.</h2>
         <p class="lead">Keep the systems that work. Connect them through a LIMS connector and open APIs.</p>
@@ -87,6 +89,7 @@
         <a class="btn-ghost" href="integrations.html">See integrations</a>
       </div>
       <div class="panel" id="analyze" style="--tint:#C8A6FF" data-shape="helix" data-color="#C8A6FF" data-zoom=".8" data-cx=".76">
+        <div class="panel-field"><canvas data-field data-shape="helix" data-color="#C8A6FF" aria-hidden="true"></canvas></div>
         <p class="eyebrow">03 · Analyze</p>
         <h2>Turn complex data into clear decisions.</h2>
         <p class="lead">AI and analytics for genomic and operational data.</p>
@@ -97,6 +100,7 @@
         <a class="btn-ghost" href="human-wgs.html">Run Human WGS online</a>
       </div>
       <div class="panel" id="automate" style="--tint:#E8B25A" data-shape="pulse" data-color="#E8B25A" data-zoom=".8" data-cx=".76">
+        <div class="panel-field"><canvas data-field data-shape="pulse" data-color="#E8B25A" aria-hidden="true"></canvas></div>
         <p class="eyebrow">04 · Automate</p>
         <h2>Automate the work that slows you down.</h2>
         <p class="lead">Routine steps run on their own. People keep the decisions that matter.</p>
@@ -106,6 +110,7 @@
         <p class="also"><strong>Used for:</strong> sample-to-report lab workflows; invoices and approvals; clinical and research data processing.</p>
       </div>
       <div class="panel" id="operate" style="--tint:#FF9E8A" data-shape="clinic" data-color="#FF9E8A" data-zoom=".8" data-cx=".76">
+        <div class="panel-field"><canvas data-field data-shape="clinic" data-color="#FF9E8A" aria-hidden="true"></canvas></div>
         <p class="eyebrow">05 · Operate</p>
         <h2>Secure, reliable and ready to scale.</h2>
         <p class="lead">Run critical work on AI with security, audit and uptime built in.</p>
@@ -156,12 +161,5 @@
 </div></footer>
 <script src="assets/field.js"></script>
 <script src="assets/site.js"></script>
-<script>
-/* Phones (≤ 860 px): the stage is a 30svh band and field.js fits the shape to it; the panels'
-   desktop data-zoom values would only shrink the shapes there, so use the band's own fit. */
-if(matchMedia('(max-width:860px)').matches){
-  document.querySelectorAll('.panel[data-zoom]').forEach(function(p){p.dataset.zoom='.9';});
-}
-</script>
 </body>
 </html>

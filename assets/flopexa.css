@@ -175,11 +175,12 @@ p{font-size:17px;line-height:1.5;margin:14px 0 0;color:var(--on-dark-2)}
 @media (max-width:860px){
   .hero{min-height:auto}
   .hero--sub{padding-bottom:0}
-  .hero-field{min-height:0;height:34svh}
-  .hero--tool .hero-in{grid-template-columns:1fr}
-  .hero--tool .hero-field{min-height:0;height:180px;order:-1}
-  .cue{position:static;transform:none;margin:0 auto;min-height:40px;justify-content:flex-end}
-  .motion{position:static;margin:14px auto 0;display:block}
+  .hero-copy{padding-top:32px}
+  .hero-field{min-height:0;height:44svh;max-height:420px}   /* fit() scales the 780×720 shape box to the host, so a taller band is a bigger shape */
+  .hero--tool .hero-in{grid-template-columns:1fr;gap:18px}
+  .hero--tool .hero-field{min-height:0;height:32svh;max-height:300px;order:-1}
+  .cue{display:none}
+  .motion{position:static;margin:6px auto 0;display:block}
 }
 
 /* ── pinned stage: the field is a full-width layer the copy rides over ── */
@@ -202,6 +203,7 @@ p{font-size:17px;line-height:1.5;margin:14px 0 0;color:var(--on-dark-2)}
 .panel .chips{margin-top:18px}
 .panel .btn-ghost,.panel .link{margin-top:22px}
 .panel>.btn-ghost,.panel>.link{align-self:flex-start}   /* the panel is a column flex box: keep the pill content-sized, not stretched */
+.panel-field{display:none}                                /* phones only: the panel's own shape, see the narrow block */
 
 /* ── segmented control (species radios on index, route tabs on the WGS page) ── */
 .seg{display:inline-flex;margin:30px auto 0;padding:3px;border-radius:999px;
@@ -390,7 +392,15 @@ a.rung:hover .rung-name{text-decoration:underline}
 .pipe h3,.pipe h4{margin:0;font-size:18px;font-weight:600;letter-spacing:-.015em}
 .pipe p{font-size:14px;margin-top:6px}
 .pipe li+li::before{content:"";position:absolute;left:-14px;top:50%;width:14px;height:1px;background:var(--line-d)}
-@media (max-width:860px){.pipe{grid-template-columns:1fr;gap:10px}.pipe li+li::before{left:30px;top:-10px;width:1px;height:10px}}
+@media (max-width:860px){
+  .pipe{grid-template-columns:1fr;gap:8px}
+  .pipe li+li::before{display:none}
+  .pipe li,.pipe--links a{display:grid;grid-template-columns:30px 1fr;column-gap:10px;align-items:baseline;padding:12px 14px}
+  .pipe--links li{display:block;padding:0}
+  .pipe b{grid-row:1/3;margin:0}
+  .pipe h3,.pipe h4{font-size:17px}
+  .pipe p{grid-column:2;margin-top:2px;font-size:14px}
+}
 
 /* ── footer ─────────────────────────────────────────────────── */
 .foot{background:var(--light);color:var(--on-light-2);
@@ -415,13 +425,16 @@ a.rung:hover .rung-name{text-decoration:underline}
 
 /* ── narrow ─────────────────────────────────────────────────── */
 @media (max-width:860px){
-  .stage-sticky{top:var(--nav-h);height:30svh;z-index:2;background:var(--black);
-    -webkit-mask-image:none;mask-image:none;border-bottom:1px solid var(--line-d)}
-  .stage-sticky::after{inset:auto 0 0 0;height:48px;background:linear-gradient(transparent,var(--black))}
-  .page-module .stage-sticky{display:none}         /* module pages: the hero already showed the shape */
+  /* no pinned band on phones: it held a small shape and, with the nav, covered a third of the screen while
+     reading. Each panel shows its own shape instead, full width, above its copy. */
+  .stage-sticky{display:none}
   .panels{z-index:1;margin-top:0;min-height:0}
-  .panel{width:100%;padding:40px 0 28px}
-  .panel:first-child{padding-top:40px}.panel:last-child{padding-bottom:40px}
+  .panel{width:100%;padding:8px 0 36px}
+  .panel:first-child{padding-top:8px}.panel:last-child{padding-bottom:40px}
+  .panel-field{display:block;position:relative;height:36svh;min-height:230px;max-height:360px;
+    margin:0 calc(-1 * var(--pad)) 14px}
+  .panel-field canvas{position:absolute;inset:0;width:100%;height:100%}
+  .panel .eyebrow{margin-bottom:6px}
 }
 @media (max-width:760px){   /* single-column ladder: 760 rather than 720 so "Therapeutics AI ›" (123px) never wraps in the five-column layout */
   .ladder{grid-template-columns:1fr;gap:0}
@@ -437,6 +450,12 @@ a.rung:hover .rung-name{text-decoration:underline}
 @media (max-width:720px){
   .nav-brand{font-size:17px}
   .lead{max-width:none}
+}
+@media (max-width:600px){
+  :root{--s-pad:44px}
+  .cards{gap:12px;margin-top:24px}
+  .card{padding:22px 20px}
+  .chips--jump{margin-top:20px}
 }
 
 /* ── genomics picker: species radios, four test cards per species ── */
@@ -458,7 +477,7 @@ a.rung:hover .rung-name{text-decoration:underline}
 .tcopy-act{margin-top:14px}
 @media (max-width:860px){
   .pick-in{grid-template-columns:1fr}
-  .pick-field{height:30svh;order:-1;
+  .pick-field{height:40svh;max-height:380px;order:-1;
     -webkit-mask-image:linear-gradient(#000 76%,transparent);
     mask-image:linear-gradient(#000 76%,transparent)}
 }
@@ -730,7 +749,7 @@ fieldset.runopts,.fields{border:0;padding:0;min-width:0;margin:clamp(24px,4vw,36
   background:rgba(0,0,0,.72);box-shadow:inset 0 0 0 1px var(--line-d)}
 @media (max-width:860px){
   .eco{grid-template-columns:1fr}
-  .eco-core{height:200px;order:-1}
+  .eco-core{height:300px;order:-1;margin:0 calc(-1 * var(--pad))}
   .eco ul{grid-template-columns:repeat(2,1fr)}
 }
 
