@@ -45,7 +45,7 @@
   if(nav&&btn&&menu){
     var mq=matchMedia("(max-width:1023px)");
     function set(open){
-      nav.classList.toggle("open",open);btn.setAttribute("aria-expanded",open);btn.textContent=open?"Close":"Menu";
+      nav.classList.toggle("open",open);btn.setAttribute("aria-expanded",open);
       document.body.classList.toggle("nav-open",open);
       if(!open&&document.activeElement&&menu.contains(document.activeElement))btn.focus();
       /* the sheet precedes the button in DOM order, so on open move focus to its first row; Tab then walks the sheet */
@@ -57,6 +57,7 @@
       if(nav.classList.contains("open")&&mq.matches&&e.relatedTarget&&!nav.contains(e.relatedTarget))set(false);
     });
     btn.addEventListener("click",function(){set(!nav.classList.contains("open"));});
+    nav.querySelectorAll(".nav-close,.nav-scrim").forEach(function(x){x.addEventListener("click",function(){set(false);btn.focus();});});
     document.addEventListener("keydown",function(e){if(e.key==="Escape"&&nav.classList.contains("open")){set(false);btn.focus();}});
     document.addEventListener("click",function(e){if(nav.classList.contains("open")&&!nav.contains(e.target))set(false);});
     menu.addEventListener("click",function(e){if(e.target.tagName==="A")set(false);});

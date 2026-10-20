@@ -63,36 +63,50 @@ img{max-width:100%;display:block}
   display:inline-block;line-height:44px}
 .nav-links{margin-left:auto;display:flex;gap:22px;align-items:center}
 .nav-group{display:contents}
-.nav-links .nav-subs,.nav-links .nav-try{display:none}   /* phone sheet only; out-ranks .nav-links a */
+.nav-links .nav-subs,.nav-links .nav-try,.nav-links .nav-cta,.nav-head,.nav-scrim{display:none}   /* phone drawer only; out-ranks .nav-links a */
 .nav-links a{font-size:13px;color:var(--on-dark-2);white-space:nowrap;
   min-height:44px;display:inline-flex;align-items:center;padding:0 2px;
   transition:color .25s var(--ease)}
 .nav-links a:hover,.nav-links a[aria-current]{color:var(--on-dark)}
 .nav-menu{display:none;appearance:none;border:1px solid var(--line-d);background:transparent;
-  color:var(--on-dark);font:inherit;font-size:14px;min-width:44px;height:36px;
-  padding:0 12px;border-radius:999px;cursor:pointer}
+  color:var(--on-dark);width:40px;height:40px;padding:0;border-radius:50%;cursor:pointer;flex:none}
+.nav-menu svg{width:20px;height:20px}
 @media (max-width:1023px){
-  .nav-menu{display:inline-flex;align-items:center}
-  /* the phone sheet: six section rows that fit one screen, sub-pages as chips, one "try it" row */
-  .nav-links{display:none;position:absolute;left:0;right:0;top:var(--nav-h);
-    flex-direction:column;align-items:stretch;gap:0;margin:0;padding:0 var(--pad) 28px;
-    background:var(--black);height:calc(100svh - var(--nav-h));overflow-y:auto}
-  .nav.open .nav-links{display:flex}
+  .nav-menu{display:inline-grid;place-items:center}
+  /* the phone drawer: slides in from the right over the dimmed page; the page stays where it was.
+     The bar loses its blur here: backdrop-filter would make it the containing block for the fixed
+     drawer, and the drawer parked off-screen would then add 335px of sideways scroll. */
+  .nav{-webkit-backdrop-filter:none;backdrop-filter:none;background:var(--black)}
+  .nav-scrim{display:block;position:fixed;top:0;left:0;width:100%;height:100svh;z-index:65;
+    background:rgba(0,0,0,.62);opacity:0;pointer-events:none;transition:opacity .34s var(--ease)}
+  .nav.open .nav-scrim{opacity:1;pointer-events:auto}
+  .nav-links{display:flex;flex-direction:column;align-items:stretch;gap:0;margin:0;
+    position:fixed;top:0;right:0;height:100svh;width:min(86vw,380px);padding:0 22px 28px;
+    background:var(--panel);box-shadow:-16px 0 48px rgba(0,0,0,.55);overflow-y:auto;z-index:70;
+    transform:translateX(100%);visibility:hidden;
+    transition:transform .34s var(--ease),visibility 0s linear .34s}
+  .nav.open .nav-links{transform:none;visibility:visible;transition:transform .34s var(--ease),visibility 0s}
+  .nav-head{display:flex;align-items:center;justify-content:space-between;min-height:var(--nav-h);margin-bottom:2px}
+  .nav-head span{font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--on-dark-2)}
+  .nav-close{appearance:none;border:1px solid var(--line-d);background:transparent;color:var(--on-dark);
+    width:40px;height:40px;border-radius:50%;display:grid;place-items:center;cursor:pointer;margin-right:-6px}
+  .nav-close svg{width:15px;height:15px}
   .nav-group{display:block;border-top:1px solid var(--line-d);padding:2px 0}
-  .nav-group:first-child{border-top:0}
-  .nav-group>a{min-height:54px;font-size:20px;font-weight:600;color:var(--on-dark);
+  .nav-group:nth-child(2){border-top:0}
+  .nav-group>a{min-height:54px;font-size:19px;font-weight:600;color:var(--on-dark);
     display:flex;align-items:center;justify-content:space-between;padding:0}
   .nav-group>a::after{content:"\203A";font-size:22px;font-weight:400;color:var(--on-dark-2)}
-  .nav-group>a[aria-current="true"]::after{content:"\203A";color:var(--blue)}
+  .nav-group>a[aria-current="true"]::after{color:var(--blue)}
   .nav-links .nav-subs{display:flex;flex-wrap:wrap;gap:8px;padding:0 0 14px}
-  .nav-links .nav-sub{display:inline-flex;align-items:center;min-height:40px;padding:0 14px;
+  .nav-links .nav-sub{display:inline-flex;align-items:center;min-height:38px;padding:0 13px;
     border-radius:999px;background:rgba(245,245,247,.10);color:var(--on-dark);font-size:14px;font-weight:500}
   .nav-links .nav-sub[aria-current="page"]{background:rgba(245,245,247,.22)}
-  .nav-links .nav-try{display:flex;align-items:center;gap:10px;min-height:52px;margin-top:16px;padding:0 18px;
-    border-radius:999px;background:rgba(245,245,247,.08);box-shadow:inset 0 0 0 1px var(--line-d);
-    color:var(--on-dark);font-size:16px;font-weight:600}
-  .nav-try small{margin-left:auto;font-size:13px;font-weight:400;color:var(--on-dark-2);white-space:nowrap}
+  .nav-links .nav-try{display:flex;align-items:center;gap:10px;min-height:50px;margin-top:16px;padding:0 16px;
+    border-radius:999px;background:rgba(245,245,247,.07);box-shadow:inset 0 0 0 1px var(--line-d);
+    color:var(--on-dark);font-size:15px;font-weight:600}
+  .nav-try small{margin-left:auto;font-size:12px;font-weight:400;color:var(--on-dark-2);white-space:nowrap}
   .nav-try .dot-live{flex:none}
+  .nav-links .nav-cta{display:inline-flex;margin-top:12px;font-size:16px;min-height:48px;background:var(--on-dark);color:var(--ink)}
   .nav-search{margin-left:auto}
   body.nav-open{overflow:hidden}
 }
